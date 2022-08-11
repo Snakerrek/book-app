@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import BookList from "./pages/BookList";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
+import Book from "./pages/Book";
 
 const App = (): JSX.Element => {
   return (
@@ -29,6 +30,7 @@ const App = (): JSX.Element => {
         <Route path="/bookList" element={<BookList />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/book/:id" element={<Book />}></Route>
       </Routes>
     </>
   );
