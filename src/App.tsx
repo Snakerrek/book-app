@@ -5,6 +5,7 @@ import BookList from "./pages/BookList";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Book from "./pages/Book";
+import NotFound from "./pages/NotFound";
 
 const App = (): JSX.Element => {
   return (
@@ -31,6 +32,7 @@ const App = (): JSX.Element => {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
         <Route path="/book/:id" element={<Book />}></Route>
+        <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </>
   );
