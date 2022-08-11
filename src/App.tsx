@@ -1,11 +1,11 @@
 import { Routes, Route, Link } from "react-router-dom";
 import React from "react";
-import Home from "./pages/Home";
-import BookList from "./pages/BookList";
-import Login from "./pages/Login";
-import Profile from "./pages/Profile";
-import Book from "./pages/Book";
-import NotFound from "./pages/NotFound";
+import Home from "./pages/Home/Home";
+import BookList from "./pages/BookList/BookList";
+import Login from "./pages/Login/Login";
+import Profile from "./pages/Profile/Profile";
+import Book from "./pages/Book/Book";
+import NotFound from "./pages/NotFound/NotFound";
 
 const App = (): JSX.Element => {
   return (
