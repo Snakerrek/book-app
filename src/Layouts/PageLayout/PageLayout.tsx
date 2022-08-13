@@ -1,11 +1,11 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import SideBar from "../../Components/SideBar/SideBar";
+import Sidebar from "../../Components/Sidebar/Sidebar";
 
 const PageLayout = () => {
   return (
     <div>
-      <SideBar />
+      <Sidebar />
       <Outlet />
     </div>
   );

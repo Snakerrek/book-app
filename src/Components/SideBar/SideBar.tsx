@@ -1,9 +1,12 @@
 import React from "react";
+import styled from "styled-components";
 
-type Props = {};
+const SidebarWrapper = styled.nav`
+  font-size: ${(props) => props.theme.fontBig};
+`;
 
-const SideBar = (props: Props) => {
-  return <div>SideBar</div>;
+const Sidebar = () => {
+  return <SidebarWrapper>SideBar</SidebarWrapper>;
 };
 
-export default SideBar;
+export default Sidebar;
