@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import AuthBottomLink from "../../Components/AuthForm/AuthBottomLink";
@@ -22,12 +22,41 @@ const LoginWrapper = styled.div`
 `;
 
 const Login = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const user = {
+      username: username,
+      password: password,
+    };
+
+    fetch("/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        localStorage.setItem("token", data.token);
+        navigate("/");
+      });
   };
+
+  useEffect(() => {
+    fetch("/auth/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token") || "",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => (data.isLoggedIn ? navigate("/") : null));
+  }, []);
 
   return (
     <LoginWrapper>
@@ -38,11 +67,13 @@ const Login = () => {
         <AuthInput
           type="text"
           placeholder="Username"
+          required
           onChange={(e) => setUsername(e.target.value)}
         />
         <AuthInput
           type="password"
           placeholder="Password"
+          required
           onChange={(e) => setPassword(e.target.value)}
         />
         <AuthSubmitButton type="submit">Login</AuthSubmitButton>

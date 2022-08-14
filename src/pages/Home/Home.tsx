@@ -1,8 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-type Props = {};
-
-const Home = (props: Props) => {
+const Home = () => {
   return (
     <div>
       <p>

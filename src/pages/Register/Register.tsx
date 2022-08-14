@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import AuthBottomLink from "../../Components/AuthForm/AuthBottomLink";
@@ -22,13 +22,39 @@ const RegisterWrapper = styled.div`
 `;
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const user = {
+      username: username,
+      email: email,
+      password: password,
+    };
+
+    await fetch("/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+    navigate("/login");
   };
+
+  useEffect(() => {
+    fetch("/auth/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token") || "",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => (data.isLoggedIn ? navigate("/") : null));
+  }, []);
 
   return (
     <RegisterWrapper>

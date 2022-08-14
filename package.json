@@ -2,6 +2,7 @@
   "name": "book-app-frontend",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8080",
   "dependencies": {
     "@types/node": "^16.11.47",
     "@types/react": "^18.0.15",

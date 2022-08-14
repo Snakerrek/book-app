@@ -32,8 +32,8 @@ const Sidebar = () => {
   return (
     <SidebarWrapper>
       <SidebarItems>
-        {sidebarItems.map((item) => (
-          <SidebarItem item={item} />
+        {sidebarItems.map((item, index) => (
+          <SidebarItem key={`sidebarItem-${index}`} item={item} />
         ))}
       </SidebarItems>
     </SidebarWrapper>
