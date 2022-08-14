@@ -42,8 +42,13 @@ const Register = () => {
         "Content-type": "application/json",
       },
       body: JSON.stringify(user),
-    });
-    navigate("/login");
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.registerSuccessful) {
+          navigate("/login");
+        }
+      });
   };
 
   useEffect(() => {

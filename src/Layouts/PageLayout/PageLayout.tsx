@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Sidebar from "../../Components/Sidebar/Sidebar";
@@ -10,23 +10,29 @@ const ContentWrapper = styled.main`
 
 const PageLayout = () => {
   const navigate = useNavigate();
+  const [authenticated, setAuthenticated] = useState<boolean>(false);
   useEffect(() => {
-    console.log("hi");
     fetch("/auth/isUserAuth", {
       headers: {
         "x-access-token": localStorage.getItem("token") || "",
       },
     })
       .then((res) => res.json())
-      .then((data) => (data.isLoggedIn ? null : navigate("/login")));
+      .then((data) =>
+        data.isLoggedIn ? setAuthenticated(true) : navigate("/login")
+      );
   }, []);
 
   return (
     <>
-      <Sidebar />
-      <ContentWrapper>
-        <Outlet />
-      </ContentWrapper>
+      {authenticated && (
+        <>
+          <Sidebar />
+          <ContentWrapper>
+            <Outlet />
+          </ContentWrapper>
+        </>
+      )}
     </>
   );
 };
