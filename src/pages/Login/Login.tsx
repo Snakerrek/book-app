@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
 
 import AuthPageLayout from "../../Layouts/AuthPageLayout/AuthPageLayout";
 
@@ -9,8 +8,6 @@ import AuthForm from "../../Components/AuthForm/AuthForm";
 import AuthInput from "../../Components/AuthForm/AuthInput";
 import AuthTitleContainer from "../../Components/AuthForm/AuthTitleContainer";
 import AuthSubmitButton from "../../Components/AuthForm/AuthSubmitButton";
-
-const LoginWrapper = styled.div``;
 
 const Login = () => {
   const navigate = useNavigate();
