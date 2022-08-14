@@ -8,7 +8,7 @@ import AuthInput from "../../Components/AuthForm/AuthInput";
 import AuthTitleContainer from "../../Components/AuthForm/AuthTitleContainer";
 import AuthSubmitButton from "../../Components/AuthForm/AuthSubmitButton";
 
-const LoginWrapper = styled.div`
+const RegisterWrapper = styled.div`
   background: ${(props) => props.theme.backgroundColors.white};
   border-radius: 0.5rem;
   padding: 1.5rem;
@@ -21,8 +21,9 @@ const LoginWrapper = styled.div`
   padding-bottom: 2rem;
 `;
 
-const Login = () => {
+const Register = () => {
   const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -30,9 +31,9 @@ const Login = () => {
   };
 
   return (
-    <LoginWrapper>
+    <RegisterWrapper>
       <AuthTitleContainer>
-        <h3>Login</h3>
+        <h3>Register</h3>
       </AuthTitleContainer>
       <AuthForm onSubmit={handleSubmit}>
         <AuthInput
@@ -41,17 +42,22 @@ const Login = () => {
           onChange={(e) => setUsername(e.target.value)}
         />
         <AuthInput
+          type="text"
+          placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <AuthInput
           type="password"
           placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <AuthSubmitButton type="submit">Login</AuthSubmitButton>
+        <AuthSubmitButton type="submit">Register</AuthSubmitButton>
       </AuthForm>
       <AuthBottomLink>
-        Dont have account? <Link to={"/register"}>Sign Up</Link> now.
+        Have account? <Link to={"/login"}>Sign In</Link> now.
       </AuthBottomLink>
-    </LoginWrapper>
+    </RegisterWrapper>
   );
 };
 
-export default Login;
+export default Register;

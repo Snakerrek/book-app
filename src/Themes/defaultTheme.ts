@@ -6,6 +6,7 @@ const defaultTheme = {
     grey: "#464A53",
     lightGrey: "#76838F",
     white: "#FFFFFF",
+    purple: "#7571f9",
   },
   backgroundColors: {
     grey: "#F3F3F9",
@@ -17,6 +18,10 @@ const defaultTheme = {
     pink: "#F96C8E",
     green: "#6FD96F",
     orange: "#F29D56",
+    superLightGrey: "#f5f5f5",
+  },
+  shadows: {
+    lightGreyShadow: "-1px -1px 17px -4px rgba(202, 202, 202, 1)",
   },
   gradients: {
     orange:

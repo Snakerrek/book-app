@@ -10,6 +10,7 @@ import Profile from "./pages/Profile/Profile";
 import Book from "./pages/Book/Book";
 import NotFound from "./pages/NotFound/NotFound";
 import Layout from "./Layouts/PageLayout/PageLayout";
+import Register from "./pages/Register/Register";
 
 const App = (): JSX.Element => {
   return (
@@ -23,6 +24,7 @@ const App = (): JSX.Element => {
             <Route path=":id" element={<Book />} />
           </Route>
         </Route>
+        <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
