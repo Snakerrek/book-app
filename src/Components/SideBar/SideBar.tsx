@@ -6,13 +6,14 @@ import { ItemText } from "./SidebarItem";
 import sidebarItems from "./sidebarItems";
 
 export const SidebarWrapper = styled.nav`
-  width: 5rem;
+  width: 4rem;
   height: 100vh;
   position: fixed;
   background-color: ${(p) => p.theme.backgroundColors.white};
+  z-index: 100;
 
   &:hover {
-    width: 16rem;
+    width: 12rem;
 
     ${ItemText} {
       display: block;

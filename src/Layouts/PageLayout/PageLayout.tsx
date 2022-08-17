@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Navbar from "../../Components/Navbar/Navbar";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 
 const ContentWrapper = styled.main`
-  margin-left: 5rem;
-  padding: 1rem;
+  padding: 4rem 0 0 5rem;
 `;
 
 const PageLayout = () => {
@@ -28,6 +28,7 @@ const PageLayout = () => {
       {authenticated && (
         <>
           <Sidebar />
+          <Navbar />
           <ContentWrapper>
             <Outlet />
           </ContentWrapper>

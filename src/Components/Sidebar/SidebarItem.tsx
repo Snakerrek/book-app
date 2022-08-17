@@ -14,13 +14,13 @@ export const ItemText = styled.span`
 const ItemLink = styled(Link)`
   display: flex;
   align-items: center;
-  height: 5rem;
+  height: 4rem;
   color: ${(p) => p.theme.textColors.grey};
   text-decoration: none;
 
   svg {
     font-size: 2rem;
-    margin: 0 1.5rem;
+    margin: 0 1rem;
   }
 `;
 
