@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const SearchbarWrapper = styled.form`
@@ -43,12 +44,21 @@ const SearchbarWrapper = styled.form`
 `;
 
 const Searchbar = () => {
+  const navigate = useNavigate();
+  const [searchPhrase, setSearchPhrase] = useState<string>();
+
+  const onSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    navigate(`/bookSearch/${searchPhrase}`);
+  };
+
   return (
-    <SearchbarWrapper>
+    <SearchbarWrapper onSubmit={onSearch}>
       <input
         type={"text"}
         placeholder={"Search for book or an author!"}
-        name={"search"}
+        onChange={(e) => setSearchPhrase(e.target.value)}
       />
       <button type="submit">
         <FaSearch />

@@ -4,7 +4,7 @@ import { ThemeProvider } from "styled-components";
 import defaultTheme, { GlobalStyle } from "./Themes/defaultTheme";
 
 import Home from "./Pages/Home/Home";
-import BookList from "./Pages/BookList/BookList";
+import BookSearch from "./Pages/BookSearch/BookSearch";
 import Login from "./Pages/Login/Login";
 import Profile from "./Pages/Profile/Profile";
 import Book from "./Pages/Book/Book";
@@ -18,7 +18,7 @@ const App = (): JSX.Element => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="bookList" element={<BookList />} />
+          <Route path="bookSearch/:searchPhrase" element={<BookSearch />} />
           <Route path="profile" element={<Profile />} />
           <Route path="book/:id" element={<Book />} />
         </Route>
