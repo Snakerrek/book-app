@@ -14,6 +14,10 @@ const NavbarWrapper = styled.nav`
   padding-right: 1rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  @media (max-width: 576px) {
+    padding-left: 5rem;
+  }
 `;
 
 const Navbar = () => {

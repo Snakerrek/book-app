@@ -7,8 +7,10 @@ type Props = {
 
 const ProfileLogoWrapper = styled.div`
   width: 4rem;
+  min-width: 4rem;
   height: 4rem;
   padding: 0.4rem;
+  margin-left: 1rem;
 
   & img {
     border-radius: 2rem;
