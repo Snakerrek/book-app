@@ -15,15 +15,14 @@ const BookSearch = () => {
   const { searchPhrase } = useParams();
   const [books, setBooks] = useState<BasicBookType[] | null>(null);
 
-  const fetchBooks = async () => {
+  const fetchBooks = async (searchPhrase: string) => {
     const jsonBooks = await fetch(`/api/books/searchBooks/${searchPhrase}`);
     const books: BasicBookType[] = await jsonBooks.json();
     setBooks(books);
-    console.log(books);
   };
 
   useEffect(() => {
-    fetchBooks();
+    if (searchPhrase) fetchBooks(searchPhrase);
   }, [searchPhrase]);
 
   return (
