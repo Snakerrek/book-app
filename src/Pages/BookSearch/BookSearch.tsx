@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import BookThumbnail from "../../Components/BookThumbnail/BookThumbnail";
-import { BookType } from "../../types";
+import { BasicBookType } from "../../types";
 
 const BookSearchWrapper = styled.div`
   display: flex;
@@ -13,11 +13,11 @@ const BookSearchWrapper = styled.div`
 
 const BookSearch = () => {
   const { searchPhrase } = useParams();
-  const [books, setBooks] = useState<BookType[] | null>(null);
+  const [books, setBooks] = useState<BasicBookType[] | null>(null);
 
   const fetchBooks = async () => {
     const jsonBooks = await fetch(`/api/books/searchBooks/${searchPhrase}`);
-    const books: BookType[] = await jsonBooks.json();
+    const books: BasicBookType[] = await jsonBooks.json();
     setBooks(books);
   };
 

@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { BookType } from "../../types";
+import { BasicBookType } from "../../types";
 import { Link } from "react-router-dom";
 
 type Props = {
-  book: BookType;
+  book: BasicBookType;
 };
 
 const BookThumbnailWrapper = styled.div`
