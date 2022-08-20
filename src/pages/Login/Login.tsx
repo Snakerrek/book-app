@@ -22,7 +22,7 @@ const Login = () => {
       password: password,
     };
 
-    fetch("/auth/login", {
+    fetch("/api/auth/login", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -39,7 +39,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    fetch("/auth/isUserAuth", {
+    fetch("/api/auth/isUserAuth", {
       headers: {
         "x-access-token": localStorage.getItem("token") || "",
       },

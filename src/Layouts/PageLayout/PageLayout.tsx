@@ -11,8 +11,9 @@ const ContentWrapper = styled.main`
 const PageLayout = () => {
   const navigate = useNavigate();
   const [authenticated, setAuthenticated] = useState<boolean>(false);
-  useEffect(() => {
-    fetch("/auth/isUserAuth", {
+
+  const checkAuthentication = () => {
+    fetch("/api/auth/isUserAuth", {
       headers: {
         "x-access-token": localStorage.getItem("token") || "",
       },
@@ -21,6 +22,11 @@ const PageLayout = () => {
       .then((data) =>
         data.isLoggedIn ? setAuthenticated(true) : navigate("/login")
       );
+  };
+
+  useEffect(() => {
+    checkAuthentication();
+    setInterval(checkAuthentication, 10 * 60 * 1000);
   }, []);
 
   return (

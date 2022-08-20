@@ -24,7 +24,7 @@ const Register = () => {
       password: password,
     };
 
-    await fetch("/auth/register", {
+    await fetch("/api/auth/register", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -40,7 +40,7 @@ const Register = () => {
   };
 
   useEffect(() => {
-    fetch("/auth/isUserAuth", {
+    fetch("/api/auth/isUserAuth", {
       headers: {
         "x-access-token": localStorage.getItem("token") || "",
       },

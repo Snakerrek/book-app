@@ -19,7 +19,7 @@ const AuthPageLayout = (props: { children: JSX.Element }) => {
   const navigate = useNavigate();
   const [display, setDisplay] = useState<boolean>(false);
   useEffect(() => {
-    fetch("/auth/isUserAuth", {
+    fetch("/api/auth/isUserAuth", {
       headers: {
         "x-access-token": localStorage.getItem("token") || "",
       },
