@@ -19,6 +19,7 @@ const BookSearch = () => {
     const jsonBooks = await fetch(`/api/books/searchBooks/${searchPhrase}`);
     const books: BasicBookType[] = await jsonBooks.json();
     setBooks(books);
+    console.log(books);
   };
 
   useEffect(() => {
