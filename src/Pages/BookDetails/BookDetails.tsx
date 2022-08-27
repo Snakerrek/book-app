@@ -12,7 +12,6 @@ const BookDetails = (props: Props) => {
     const bookDetJson = await fetch(`/api/books/getDetails/${id}`);
     const bookDet = await bookDetJson.json();
     setBookDetails(bookDet);
-    console.log(bookDet);
   };
 
   useEffect(() => {

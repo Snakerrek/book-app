@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import useDebounce from "../../Hooks/useDebounce";
 
 const SearchbarWrapper = styled.form`
-  width: 100%;
-  max-width: 800px;
+  width: 80%;
   background: rgba(0, 0, 0, 0.05);
   display: flex;
   align-items: center;
@@ -45,13 +45,20 @@ const SearchbarWrapper = styled.form`
 
 const Searchbar = () => {
   const navigate = useNavigate();
-  const [searchPhrase, setSearchPhrase] = useState<string>();
+  const [searchPhrase, setSearchPhrase] = useState<string>("");
+  const debouncedSearchPhrase = useDebounce<string>(searchPhrase);
 
   const onSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     navigate(`/bookSearch/${searchPhrase}`);
   };
+
+  useEffect(() => {
+    if (debouncedSearchPhrase !== "") {
+      navigate(`/bookSearch/${debouncedSearchPhrase}`);
+    }
+  }, [debouncedSearchPhrase]);
 
   return (
     <SearchbarWrapper onSubmit={onSearch}>
