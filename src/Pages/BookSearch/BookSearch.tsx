@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import BookThumbnail from "../../Components/BookThumbnail/BookThumbnail";
 import { BasicBookType } from "../../types";
+import AddBookForm from "../../Components/AddBookForm/AddBookForm";
+import Modal from "../../Components/Modal/Modal";
 
 const BookSearchWrapper = styled.div`
   display: flex;
@@ -14,6 +16,12 @@ const BookSearchWrapper = styled.div`
 const BookSearch = () => {
   const { searchPhrase } = useParams();
   const [books, setBooks] = useState<BasicBookType[] | null>(null);
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
 
   const fetchBooks = async (searchPhrase: string) => {
     const jsonBooks = await fetch(`/api/books/searchBooks/${searchPhrase}`);
@@ -27,10 +35,24 @@ const BookSearch = () => {
 
   return (
     <BookSearchWrapper>
-      {books &&
+      {books && books.length > 0 ? (
         books.map((book, index) => (
           <BookThumbnail book={book} key={`bookThumbnail-${index}`} />
-        ))}
+        ))
+      ) : (
+        <div>
+          Unfortunately there is no such book in database. Would you like to add
+          it yourself?
+          <button onClick={toggleModal}>Add book</button>
+          {isModalOpen && (
+            <Modal
+              title={"Add book"}
+              midContent={<AddBookForm />}
+              onClose={toggleModal}
+            />
+          )}
+        </div>
+      )}
     </BookSearchWrapper>
   );
 };
