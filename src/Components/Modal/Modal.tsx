@@ -69,7 +69,11 @@ const Modal = (props: Props) => {
   const { onClose, title, midContent, bottomContent } = props;
   return (
     <Overlay onClick={onClose}>
-      <ModalContainer>
+      <ModalContainer
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <TopContainer>
           <h2>{title}</h2>
           <GrClose />
