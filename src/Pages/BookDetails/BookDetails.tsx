@@ -11,12 +11,13 @@ const BookDetails = (props: Props) => {
   const fetchBookDetails = async (bookId: string) => {
     const bookDetJson = await fetch(`/api/books/getDetails/${id}`);
     const bookDet = await bookDetJson.json();
+    console.log(bookDet);
     setBookDetails(bookDet);
   };
 
-  useEffect(() => {
-    if (id) fetchBookDetails(id);
-  }, [id]);
+  // useEffect(() => {
+  //   if (id) fetchBookDetails(id);
+  // }, [id]);
 
   return <div>Book {id}</div>;
 };

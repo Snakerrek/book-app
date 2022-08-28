@@ -12,9 +12,9 @@ const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
     title: "",
     cover: "",
     authors: [""],
-    isbn: 0,
+    isbn: "",
     description: "",
-    pageCount: 0,
+    pageCount: "",
     categories: [""],
   });
 

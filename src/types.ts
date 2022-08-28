@@ -3,11 +3,11 @@ export interface BasicBookType {
   title: string;
   cover: string;
   authors: string[];
-  isbn: number;
+  isbn: string;
 }
 
 export interface AdvancedBookType extends BasicBookType {
   description: string;
-  pageCount: number;
+  pageCount: string;
   categories: string[];
 }
