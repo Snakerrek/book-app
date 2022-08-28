@@ -31,14 +31,14 @@ const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
   const handleAddBook = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    await fetch("/api/book/addBook", {
+    await fetch("/api/books/addBook", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
       body: JSON.stringify(bookData),
     });
-    onSubmit();
+    //onSubmit();
   };
 
   return (
