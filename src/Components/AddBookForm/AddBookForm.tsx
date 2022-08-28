@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AdvancedBookType } from "../../types";
 
-import FormBottomLink from "../../Components/Form/FormBottomLink";
 import Form from "../../Components/Form/Form";
 import FormInput from "../../Components/Form/FormInput";
-import FormTitleContainer from "../../Components/Form/FormTitleContainer";
 import FormSubmitButton from "../../Components/Form/FormSubmitButton";
 
 const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
@@ -38,7 +36,7 @@ const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
       },
       body: JSON.stringify(bookData),
     });
-    //onSubmit();
+    onSubmit();
   };
 
   return (

@@ -22,7 +22,21 @@ const BookThumbnailWrapper = styled.div`
     border-top-right-radius: 10px;
     max-width: 100%;
   }
+
+  & > div {
+    width: 90%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
   h3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     margin-bottom: 0;
     color: ${(props) => props.theme.textColors.black};
   }
@@ -36,7 +50,9 @@ const BookThumbnail = ({ book }: Props) => {
     <Link to={`/bookDetails/${book._id}`} style={{ textDecoration: "none" }}>
       <BookThumbnailWrapper>
         <img src={book.cover} />
-        <h3>{book.title}</h3>
+        <div>
+          <h3>{book.title}</h3>
+        </div>
         <h4>{book.authors.join(", ")}</h4>
       </BookThumbnailWrapper>
     </Link>

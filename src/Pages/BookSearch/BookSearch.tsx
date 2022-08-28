@@ -11,6 +11,29 @@ const BookSearchWrapper = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   padding-top: 1rem;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & p {
+      color: ${(props) => props.theme.textColors.grey};
+      font-size: ${(props) => props.theme.fontSize.M};
+    }
+  }
+`;
+
+const Button = styled.button`
+  width: 150px;
+  padding: 15px 30px;
+  font-weight: ${(props) => props.theme.fontWeight.bold};
+  font-size: ${(props) => props.theme.fontSize.M};
+  color: ${(props) => props.theme.textColors.white};
+  border: none;
+  background: ${(props) => props.theme.colors.purple};
+  border-radius: 0.25rem;
+  cursor: pointer;
 `;
 
 const BookSearch = () => {
@@ -41,9 +64,11 @@ const BookSearch = () => {
         ))
       ) : (
         <div>
-          Unfortunately there is no such book in database. Would you like to add
-          it yourself?
-          <button onClick={toggleModal}>Add book</button>
+          <p>
+            Unfortunately there is no such book in database. Would you like to
+            add it yourself?
+          </p>
+          <Button onClick={toggleModal}>Add book</Button>
           {isModalOpen && (
             <Modal
               title={"Add book"}
