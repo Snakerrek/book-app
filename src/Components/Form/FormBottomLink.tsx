@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const AuthBottomLink = styled.span`
+const FormBottomLink = styled.span`
   font-size: ${(props) => props.theme.fontSize.S};
   color: ${(props) => props.theme.textColors.lightGrey};
   & a {
@@ -9,4 +9,4 @@ const AuthBottomLink = styled.span`
   }
 `;
 
-export default AuthBottomLink;
+export default FormBottomLink;

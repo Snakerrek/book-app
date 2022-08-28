@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-const AuthForm = styled.form`
+const Form = styled.form`
   margin: 2rem 0;
 `;
 
-export default AuthForm;
+export default Form;

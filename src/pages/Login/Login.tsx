@@ -3,11 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 import AuthPageLayout from "../../Layouts/AuthPageLayout/AuthPageLayout";
 
-import AuthBottomLink from "../../Components/AuthForm/AuthBottomLink";
-import AuthForm from "../../Components/AuthForm/AuthForm";
-import AuthInput from "../../Components/AuthForm/AuthInput";
-import AuthTitleContainer from "../../Components/AuthForm/AuthTitleContainer";
-import AuthSubmitButton from "../../Components/AuthForm/AuthSubmitButton";
+import FormBottomLink from "../../Components/Form/FormBottomLink";
+import Form from "../../Components/Form/Form";
+import FormInput from "../../Components/Form/FormInput";
+import FormTitleContainer from "../../Components/Form/FormTitleContainer";
+import FormSubmitButton from "../../Components/Form/FormSubmitButton";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -51,27 +51,27 @@ const Login = () => {
   return (
     <AuthPageLayout>
       <>
-        <AuthTitleContainer>
+        <FormTitleContainer>
           <h3>Login</h3>
-        </AuthTitleContainer>
-        <AuthForm onSubmit={handleSubmit}>
-          <AuthInput
+        </FormTitleContainer>
+        <Form onSubmit={handleSubmit}>
+          <FormInput
             type="text"
             placeholder="Username"
             required
             onChange={(e) => setUsername(e.target.value)}
           />
-          <AuthInput
+          <FormInput
             type="password"
             placeholder="Password"
             required
             onChange={(e) => setPassword(e.target.value)}
           />
-          <AuthSubmitButton type="submit">Login</AuthSubmitButton>
-        </AuthForm>
-        <AuthBottomLink>
+          <FormSubmitButton type="submit">Login</FormSubmitButton>
+        </Form>
+        <FormBottomLink>
           Dont have account? <Link to={"/register"}>Sign Up</Link> now.
-        </AuthBottomLink>
+        </FormBottomLink>
       </>
     </AuthPageLayout>
   );

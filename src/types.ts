@@ -1,5 +1,5 @@
 export interface BasicBookType {
-  _id: string;
+  _id?: string;
   title: string;
   cover: string;
   authors: string[];

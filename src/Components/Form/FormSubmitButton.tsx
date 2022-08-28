@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const AuthSubmitButton = styled.button`
+const FormSubmitButton = styled.button`
   width: 100%;
   padding: 15px 40px;
   font-weight: ${(props) => props.theme.fontWeight.bold};
@@ -12,4 +12,4 @@ const AuthSubmitButton = styled.button`
   cursor: pointer;
 `;
 
-export default AuthSubmitButton;
+export default FormSubmitButton;

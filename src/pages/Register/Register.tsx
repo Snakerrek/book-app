@@ -3,11 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 import AuthPageLayout from "../../Layouts/AuthPageLayout/AuthPageLayout";
 
-import AuthBottomLink from "../../Components/AuthForm/AuthBottomLink";
-import AuthForm from "../../Components/AuthForm/AuthForm";
-import AuthInput from "../../Components/AuthForm/AuthInput";
-import AuthTitleContainer from "../../Components/AuthForm/AuthTitleContainer";
-import AuthSubmitButton from "../../Components/AuthForm/AuthSubmitButton";
+import FormBottomLink from "../../Components/Form/FormBottomLink";
+import Form from "../../Components/Form/Form";
+import FormInput from "../../Components/Form/FormInput";
+import FormTitleContainer from "../../Components/Form/FormTitleContainer";
+import FormSubmitButton from "../../Components/Form/FormSubmitButton";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -52,30 +52,30 @@ const Register = () => {
   return (
     <AuthPageLayout>
       <>
-        <AuthTitleContainer>
+        <FormTitleContainer>
           <h3>Register</h3>
-        </AuthTitleContainer>
-        <AuthForm onSubmit={handleSubmit}>
-          <AuthInput
+        </FormTitleContainer>
+        <Form onSubmit={handleSubmit}>
+          <FormInput
             type="text"
             placeholder="Username"
             onChange={(e) => setUsername(e.target.value)}
           />
-          <AuthInput
+          <FormInput
             type="text"
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
           />
-          <AuthInput
+          <FormInput
             type="password"
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <AuthSubmitButton type="submit">Register</AuthSubmitButton>
-        </AuthForm>
-        <AuthBottomLink>
+          <FormSubmitButton type="submit">Register</FormSubmitButton>
+        </Form>
+        <FormBottomLink>
           Have account? <Link to={"/login"}>Sign In</Link> now.
-        </AuthBottomLink>
+        </FormBottomLink>
       </>
     </AuthPageLayout>
   );

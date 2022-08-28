@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const AuthInput = styled.input`
+const FormInput = styled.input`
   border: none;
   border-bottom: 1px solid ${(props) => props.theme.colors.superLightGrey};
   width: 100%;
@@ -14,4 +14,4 @@ const AuthInput = styled.input`
   }
 `;
 
-export default AuthInput;
+export default FormInput;

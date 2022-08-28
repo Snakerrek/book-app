@@ -17,24 +17,26 @@ const Overlay = styled.div`
   top: 0;
   left: 0;
   z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: initial;
 `;
 
 const ModalContainer = styled.div`
   max-width: 600px;
   min-height: 200px;
+  max-height: 80vh;
   width: 80%;
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
+  overflow-y: auto;
   background-color: ${(props) => props.theme.backgroundColors.white};
   box-shadow: ${(props) => props.theme.shadows.lightGreyShadow};
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 2rem;
+  padding: 1rem 2rem 0 2rem;
+  position: relative;
 `;
 
 const TopContainer = styled.div`
@@ -51,7 +53,7 @@ const TopContainer = styled.div`
   }
 
   & svg {
-    position: fixed;
+    position: absolute;
     top: 15px;
     right: 15px;
     font-size: ${(props) => props.theme.fontSize.M};
@@ -76,7 +78,7 @@ const Modal = (props: Props) => {
       >
         <TopContainer>
           <h2>{title}</h2>
-          <GrClose />
+          <GrClose onClick={onClose} />
         </TopContainer>
         <MidContainer>{midContent}</MidContainer>
         <BottomContainer>{bottomContent}</BottomContainer>

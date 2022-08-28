@@ -47,7 +47,7 @@ const BookSearch = () => {
           {isModalOpen && (
             <Modal
               title={"Add book"}
-              midContent={<AddBookForm />}
+              midContent={<AddBookForm onSubmit={toggleModal} />}
               onClose={toggleModal}
             />
           )}

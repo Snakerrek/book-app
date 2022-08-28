@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const AuthTitleContainer = styled.div`
+const FormTitleContainer = styled.div`
   display: flex;
   justify-content: center;
   h3 {
@@ -10,4 +10,4 @@ const AuthTitleContainer = styled.div`
   }
 `;
 
-export default AuthTitleContainer;
+export default FormTitleContainer;
