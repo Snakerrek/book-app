@@ -1,9 +1,34 @@
-function App() {
-  fetch("http://localhost:8080/books/getBooks")
-    .then((response) => response.json())
-    .then((data) => console.log(data));
+import { Routes, Route } from "react-router-dom";
 
-  return <div>test</div>;
-}
+import { ThemeProvider } from "styled-components";
+import defaultTheme, { GlobalStyle } from "./Themes/defaultTheme";
+
+import Home from "./Pages/Home/Home";
+import BookSearch from "./Pages/BookSearch/BookSearch";
+import Login from "./Pages/Login/Login";
+import Profile from "./Pages/Profile/Profile";
+import NotFound from "./Pages/NotFound/NotFound";
+import Layout from "./Layouts/PageLayout/PageLayout";
+import Register from "./Pages/Register/Register";
+import BookDetails from "./Pages/BookDetails/BookDetails";
+
+const App = (): JSX.Element => {
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="bookSearch/:searchPhrase" element={<BookSearch />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="bookDetails/:id" element={<BookDetails />} />
+        </Route>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <GlobalStyle />
+    </ThemeProvider>
+  );
+};
 
 export default App;
