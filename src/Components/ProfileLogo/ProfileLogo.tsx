@@ -19,7 +19,7 @@ const ProfileLogoWrapper = styled.div`
 const ProfileLogo = ({ avatarPath }: Props) => {
   return (
     <ProfileLogoWrapper>
-      <img src={avatarPath} alt="Profile picture" />
+      <img src={avatarPath} alt="Profile" />
     </ProfileLogoWrapper>
   );
 };
