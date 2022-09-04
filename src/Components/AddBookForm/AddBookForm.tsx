@@ -4,6 +4,7 @@ import { AdvancedBookType } from "../../types";
 import Form from "../../Components/Form/Form";
 import FormInput from "../../Components/Form/FormInput";
 import FormSubmitButton from "../../Components/Form/FormSubmitButton";
+import TextArea from "../../Components/Form/TextArea";
 
 const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
   const [bookData, setBookData] = useState<AdvancedBookType>({
@@ -16,7 +17,9 @@ const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
     categories: [""],
   });
 
-  const updateBookData = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const updateBookData = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     if (e.target.name === "authors" || e.target.name === "categories") {
       const value = [e.target.value];
       setBookData({ ...bookData, [e.target.name]: value });
@@ -64,8 +67,7 @@ const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
         value={bookData.cover}
         onChange={updateBookData}
       />
-      <FormInput
-        type="text"
+      <TextArea
         placeholder="Description"
         name="description"
         value={bookData.description}
