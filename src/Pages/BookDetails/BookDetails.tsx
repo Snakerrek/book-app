@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import StarRating from "../../Components/StarRating/StarRating";
 import { AdvancedBookType } from "../../types";
+import { BsBookHalf } from "react-icons/bs";
+import { BiTimeFive } from "react-icons/bi";
 
 const BookDetailsWrapper = styled.div`
   display: flex;
@@ -104,7 +106,9 @@ const BookDetails = () => {
             <h2>{bookDetails?.authors.join(", ")}</h2>
             <h3>{bookDetails?.categories.join(", ")}</h3>
             <div>
+              <BsBookHalf />
               <span>{bookDetails?.pageCount + "str."}</span>
+              <BiTimeFive />
               <span>
                 {bookDetails?.pageCount && getReadTime(bookDetails.pageCount)}
               </span>
