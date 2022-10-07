@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AdvancedBookType } from "../../types";
 
 import Form from "../../Components/Form/Form";
 import FormInput from "../../Components/Form/FormInput";
 import FormSubmitButton from "../../Components/Form/FormSubmitButton";
+import TextArea from "../../Components/Form/TextArea";
+import TagsInput from "../Form/TagsInput";
 
 const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
   const [bookData, setBookData] = useState<AdvancedBookType>({
@@ -14,16 +16,34 @@ const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
     description: "",
     pageCount: "",
     categories: [""],
+    reviews: [],
   });
 
-  const updateBookData = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === "authors" || e.target.name === "categories") {
-      const value = [e.target.value];
-      setBookData({ ...bookData, [e.target.name]: value });
-    } else {
-      const value = e.target.value;
-      setBookData({ ...bookData, [e.target.name]: value });
-    }
+  const updateAuthorsData = (authors: string[]) => {
+    let authorsClean: string[] = [];
+    authors.forEach((author) => {
+      if (!author.includes(",") && author !== "") {
+        authorsClean.push(author);
+      }
+    });
+    setBookData({ ...bookData, authors: authorsClean });
+  };
+
+  const updateCategoriesData = (authors: string[]) => {
+    let categoriesClean: string[] = [];
+    authors.forEach((category) => {
+      if (!category.includes(",") && category !== "") {
+        categoriesClean.push(category);
+      }
+    });
+    setBookData({ ...bookData, categories: categoriesClean });
+  };
+
+  const updateBookData = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const value = e.target.value;
+    setBookData({ ...bookData, [e.target.name]: value });
   };
 
   const handleAddBook = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -49,13 +69,10 @@ const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
         value={bookData.title}
         onChange={updateBookData}
       />
-      <FormInput
-        type="text"
-        placeholder="Authors"
-        required
-        name="authors"
-        value={bookData.authors}
-        onChange={updateBookData}
+      <TagsInput
+        name={"authors"}
+        placeholder={"Author"}
+        onChange={updateAuthorsData}
       />
       <FormInput
         type="text"
@@ -64,19 +81,16 @@ const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
         value={bookData.cover}
         onChange={updateBookData}
       />
-      <FormInput
-        type="text"
+      <TextArea
         placeholder="Description"
         name="description"
         value={bookData.description}
         onChange={updateBookData}
       />
-      <FormInput
-        type="text"
-        placeholder="Categories"
-        name="categories"
-        value={bookData.categories}
-        onChange={updateBookData}
+      <TagsInput
+        name={"categories"}
+        placeholder={"Category"}
+        onChange={updateCategoriesData}
       />
       <FormInput
         type="number"

@@ -50,8 +50,7 @@ const Searchbar = () => {
 
   const onSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    navigate(`/bookSearch/${searchPhrase}`);
+    if (searchPhrase !== "") navigate(`/bookSearch/${searchPhrase}`);
   };
 
   useEffect(() => {

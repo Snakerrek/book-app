@@ -7,10 +7,13 @@ type Props = {
   book: BasicBookType;
 };
 
+const OuterWrapper = styled.div`
+  margin: 1rem;
+`;
+
 const BookThumbnailWrapper = styled.div`
   background-color: ${(props) => props.theme.backgroundColors.white};
   border-radius: 10px;
-  margin: 1rem;
   max-width: 250px;
   box-shadow: ${(props) => props.theme.shadows.lightGreyShadow};
   display: flex;
@@ -47,15 +50,17 @@ const BookThumbnailWrapper = styled.div`
 
 const BookThumbnail = ({ book }: Props) => {
   return (
-    <Link to={`/bookDetails/${book._id}`} style={{ textDecoration: "none" }}>
-      <BookThumbnailWrapper>
-        <img src={book.cover} />
-        <div>
-          <h3>{book.title}</h3>
-        </div>
-        <h4>{book.authors.join(", ")}</h4>
-      </BookThumbnailWrapper>
-    </Link>
+    <OuterWrapper>
+      <Link to={`/bookDetails/${book._id}`} style={{ textDecoration: "none" }}>
+        <BookThumbnailWrapper>
+          <img src={book.cover} />
+          <div>
+            <h3>{book.title}</h3>
+          </div>
+          <h4>{book.authors.join(", ")}</h4>
+        </BookThumbnailWrapper>
+      </Link>
+    </OuterWrapper>
   );
 };
 
