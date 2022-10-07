@@ -88,7 +88,7 @@ const BookDetails = () => {
         if (userData && userData.id === review.authorID) {
           thisUserReview = review;
         }
-        if (review.reviewText && review.reviewText !== "") {
+        if (review.review && review.review !== "") {
           reviewsNumber += 1;
         }
         if (review.starRating) {
@@ -127,6 +127,28 @@ const BookDetails = () => {
     });
     const updatedBook = await updatedBookJson.json();
     setBookDetails(updatedBook.updatedBook);
+  };
+
+  const onSubmitReview = async (userReview?: string) => {
+    const userData: TokenUserData | null = getUserData();
+    if (userReview) {
+      const reqBody = {
+        bookID: bookDetails?._id,
+        authorID: userData?.id,
+        reviewText: userReview,
+      };
+
+      const updatedBookJson = await fetch("/api/books/rateBook", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(reqBody),
+      });
+
+      const updatedBook = await updatedBookJson.json();
+      setBookDetails(updatedBook.updatedBook);
+    }
   };
 
   useEffect(() => {
@@ -182,7 +204,11 @@ const BookDetails = () => {
               <span>{reviewData?.starRatingsCount} OCEN</span>
             </div>
             <div>
-              <p>OCEŃ KSIĄŻKĘ</p>
+              <p>
+                {reviewData?.thisUserReview?.starRating
+                  ? "TWOJA OCENA"
+                  : "OCEŃ KSIĄŻKĘ"}
+              </p>
               {reviewData?.thisUserReview?.starRating ? (
                 <StarRating
                   onStarRate={onStarRate}
@@ -198,7 +224,11 @@ const BookDetails = () => {
           <BookActions></BookActions>
         </RightColumn>
       </BookDetailsContainer>
-      <ReviewSection />
+      <ReviewSection
+        reviews={bookDetails?.reviews}
+        bookId={bookDetails?._id}
+        onSubmitReview={onSubmitReview}
+      />
     </BookDetailsWrapper>
   );
 };

@@ -9,7 +9,7 @@ export interface BasicBookType {
 export interface Review {
   authorID: string;
   starRating: string;
-  reviewText: string;
+  review: string;
 }
 
 export interface AdvancedBookType extends BasicBookType {
