@@ -16,6 +16,7 @@ const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
     description: "",
     pageCount: "",
     categories: [""],
+    reviews: [],
   });
 
   const updateAuthorsData = (authors: string[]) => {

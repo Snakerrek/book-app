@@ -12,20 +12,29 @@ const StarRatingWrapper = styled.div`
   }
 `;
 
-const StarRating = () => {
-  const [rating, setRating] = useState<number>(0);
+const StarRating = ({
+  onStarRate,
+  initialStarValue,
+}: {
+  onStarRate: (starRate: number) => void;
+  initialStarValue: number;
+}) => {
+  const [rating, setRating] = useState<number>(initialStarValue);
   const [hoveredStar, setHoveredStar] = useState<number>(0);
 
   useEffect(() => {
-    if (rating !== 0) {
-      //TODO rate request
-      console.log(`Book rated to ${rating}`);
+    if (rating > 0 && rating < 11) {
+      onStarRate(rating);
     }
   }, [rating]);
 
+  useEffect(() => {
+    setRating(initialStarValue);
+  }, [initialStarValue]);
+
   return (
     <StarRatingWrapper>
-      {[...Array(10)].map((star, index) => {
+      {[...Array(10)].map((_, index) => {
         const ratingVal = index + 1;
         return (
           <label key={`star-${index}`}>

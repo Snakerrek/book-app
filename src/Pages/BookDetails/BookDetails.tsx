@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import StarRating from "../../Components/StarRating/StarRating";
+import ReviewSection from "../../Components/ReviewSection/ReviewSection";
 import { AdvancedBookType } from "../../types";
 import { BsBookHalf } from "react-icons/bs";
 import { BiTimeFive } from "react-icons/bi";
+import { getUserData } from "../../helpers";
+import { TokenUserData, ReviewData, Review } from "../../types";
 
 const BookDetailsWrapper = styled.div`
   display: flex;
@@ -35,8 +38,9 @@ const CenterColumn = styled.div`
 const RightColumn = styled.div`
   flex: 1 1 275px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  flex-direction: column;
 
   & > div {
     display: flex;
@@ -70,6 +74,36 @@ const Title = styled.div``;
 const BookDetails = () => {
   const { id } = useParams();
   const [bookDetails, setBookDetails] = useState<AdvancedBookType | null>(null);
+  const [reviewData, setReviewData] = useState<ReviewData | null>(null);
+
+  const evalReviewData = () => {
+    const reviews = bookDetails?.reviews;
+    let starsSum = 0;
+    let starsNumber = 0;
+    let reviewsNumber = 0;
+    let thisUserReview: Review | null = null;
+    const userData: TokenUserData | null = getUserData();
+    if (reviews) {
+      reviews.forEach((review) => {
+        if (userData && userData.id === review.authorID) {
+          thisUserReview = review;
+        }
+        if (review.reviewText && review.reviewText !== "") {
+          reviewsNumber += 1;
+        }
+        if (review.starRating) {
+          starsNumber += 1;
+          starsSum += parseInt(review.starRating);
+        }
+      });
+    }
+    setReviewData({
+      starRatingAvg: starsNumber > 0 ? starsSum / starsNumber : 0,
+      starRatingsCount: starsNumber,
+      reviewsCount: reviewsNumber,
+      thisUserReview: thisUserReview || undefined,
+    });
+  };
 
   const fetchBookDetails = async (bookId: string) => {
     const bookDetJson = await fetch(`/api/books/getDetails/${id}`);
@@ -77,10 +111,32 @@ const BookDetails = () => {
     setBookDetails(bookDet);
   };
 
+  const onStarRate = async (rating: number) => {
+    const userData: TokenUserData | null = getUserData();
+    const reqBody = {
+      bookID: bookDetails?._id,
+      authorID: userData?.id,
+      starRating: rating,
+    };
+    const updatedBookJson = await fetch("/api/books/rateBook", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(reqBody),
+    });
+    const updatedBook = await updatedBookJson.json();
+    setBookDetails(updatedBook.updatedBook);
+  };
+
   useEffect(() => {
     if (id) fetchBookDetails(id);
     // eslint-disable-next-line
   }, [id]);
+
+  useEffect(() => {
+    evalReviewData();
+  }, [bookDetails?.reviews]);
 
   const getReadTime = (pageCountStr: string) => {
     // read speed 1page/1min
@@ -120,19 +176,29 @@ const BookDetails = () => {
         <RightColumn>
           <BookRating>
             <div>ŚREDNIA OCEN</div>
-            <div>7.9 / 10</div>
+            <div>{reviewData?.starRatingAvg} / 10</div>
             <div>
-              <span>224 OPINII</span>
-              <span>1122 OCEN</span>
+              <span>{reviewData?.reviewsCount} OPINII</span>
+              <span>{reviewData?.starRatingsCount} OCEN</span>
             </div>
             <div>
               <p>OCEŃ KSIĄŻKĘ</p>
-              <StarRating />
+              {reviewData?.thisUserReview?.starRating ? (
+                <StarRating
+                  onStarRate={onStarRate}
+                  initialStarValue={parseInt(
+                    reviewData?.thisUserReview?.starRating
+                  )}
+                />
+              ) : (
+                <StarRating onStarRate={onStarRate} initialStarValue={0} />
+              )}
             </div>
           </BookRating>
           <BookActions></BookActions>
         </RightColumn>
       </BookDetailsContainer>
+      <ReviewSection />
     </BookDetailsWrapper>
   );
 };
