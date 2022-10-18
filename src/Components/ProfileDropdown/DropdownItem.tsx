@@ -35,15 +35,17 @@ type Props = {
   Icon: IconType;
   text: string;
   link: string;
+  onRedirect: () => void;
 };
 
 const DropdownItem = (props: Props) => {
-  const { Icon, text, link } = props;
+  const { Icon, text, link, onRedirect } = props;
   const navigate = useNavigate();
 
   return (
     <DropdownItemLi
       onClick={() => {
+        onRedirect();
         navigate(link);
       }}
     >

@@ -92,6 +92,7 @@ const ProfileDropdown = () => {
               Icon={link.icon}
               text={link.text}
               link={link.link}
+              onRedirect={() => setOpen(false)}
             />
           ))}
         </ul>
