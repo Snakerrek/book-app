@@ -53,7 +53,7 @@ const BookThumbnail = ({ book }: Props) => {
     <OuterWrapper>
       <Link to={`/bookDetails/${book._id}`} style={{ textDecoration: "none" }}>
         <BookThumbnailWrapper>
-          <img src={book.cover} />
+          <img src={book.cover} alt={`${book.title} cover`} />
           <div>
             <h3>{book.title}</h3>
           </div>

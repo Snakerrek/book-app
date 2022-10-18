@@ -11,6 +11,7 @@ import NotFound from "./Pages/NotFound/NotFound";
 import Layout from "./Layouts/PageLayout/PageLayout";
 import Register from "./Pages/Register/Register";
 import BookDetails from "./Pages/BookDetails/BookDetails";
+import EditProfile from "./Pages/EditProfile/EditProfile";
 
 const App = (): JSX.Element => {
   return (
@@ -20,6 +21,7 @@ const App = (): JSX.Element => {
           <Route index element={<Home />} />
           <Route path="bookSearch/:searchPhrase" element={<BookSearch />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="editProfile" element={<EditProfile />} />
           <Route path="bookDetails/:id" element={<BookDetails />} />
         </Route>
         <Route path="/register" element={<Register />} />

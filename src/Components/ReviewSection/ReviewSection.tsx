@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Review, TokenUserData } from "../../types";
+import React, { useState } from "react";
+import { Review } from "../../types";
 import styled from "styled-components";
 import Form from "../Form/Form";
 import TextArea from "../Form/TextArea";
 import FormSubmitButton from "../Form/FormSubmitButton";
 import ReviewCard from "../ReviewCard/ReviewCard";
-import { getUserData } from "../../helpers";
 
 const ReviewSectionWrapper = styled.div`
   display: flex;
