@@ -225,7 +225,7 @@ const BookDetails = () => {
         </RightColumn>
       </BookDetailsContainer>
       <ReviewSection
-        reviews={bookDetails?.reviews}
+        reviews={bookDetails?.reviews ? bookDetails.reviews : []}
         bookId={bookDetails?._id}
         onSubmitReview={onSubmitReview}
       />

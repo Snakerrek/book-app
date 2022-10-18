@@ -28,7 +28,7 @@ const ReviewSectionContainer = styled.div`
 `;
 
 type Props = {
-  reviews?: Review[];
+  reviews: Review[];
   bookId?: string;
   onSubmitReview?: (userReview?: string) => void;
 };
@@ -41,7 +41,6 @@ const ReviewSection = (props: Props) => {
     if (props.onSubmitReview) props.onSubmitReview(userReview);
     setUserReview("");
   };
-
   return (
     <ReviewSectionWrapper>
       <h2>Recenzje</h2>
@@ -54,7 +53,7 @@ const ReviewSection = (props: Props) => {
           />
           <FormSubmitButton>Dodaj recenzję</FormSubmitButton>
         </Form>
-        {props.reviews?.map((review, id) => (
+        {[...props.reviews].reverse().map((review, id) => (
           <ReviewCard key={"reviewCard-" + id} review={review} />
         ))}
       </ReviewSectionContainer>
