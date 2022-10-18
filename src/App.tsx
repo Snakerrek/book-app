@@ -12,6 +12,7 @@ import Layout from "./Layouts/PageLayout/PageLayout";
 import Register from "./Pages/Register/Register";
 import BookDetails from "./Pages/BookDetails/BookDetails";
 import EditProfile from "./Pages/EditProfile/EditProfile";
+import Logout from "./Pages/Logout/Logout";
 
 const App = (): JSX.Element => {
   return (
@@ -26,6 +27,7 @@ const App = (): JSX.Element => {
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/logout" element={<Logout />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <GlobalStyle />

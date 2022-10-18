@@ -1,8 +1,6 @@
 import React from "react";
 
-type Props = {};
-
-const EditProfile = (props: Props) => {
+const EditProfile = () => {
   return <div>EditProfile</div>;
 };
 
