@@ -6,6 +6,8 @@ import FormInput from "../../Components/Form/FormInput";
 import FormSubmitButton from "../../Components/Form/FormSubmitButton";
 import TextArea from "../../Components/Form/TextArea";
 import TagsInput from "../Form/TagsInput";
+import { validateNonEmpty, xssSanitize } from "../Form/validators";
+import IncorrectInput from "../Form/IncorrectInput";
 
 const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
   const [bookData, setBookData] = useState<AdvancedBookType>({
@@ -19,11 +21,27 @@ const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
     reviews: [],
   });
 
+  const [isBookDataInvalid, setIsBookDataInvalid] = useState<{
+    titleInvalid: boolean;
+    authorInvalid: boolean;
+  }>({ titleInvalid: false, authorInvalid: false });
+
+  const isBookDataValid = (bookData: AdvancedBookType) => {
+    const isTitleValid = validateNonEmpty(bookData.title);
+    const isAuthorValid =
+      bookData.authors.length > 0 && validateNonEmpty(bookData.authors[0]);
+    setIsBookDataInvalid({
+      titleInvalid: !isTitleValid,
+      authorInvalid: !isAuthorValid,
+    });
+    return isTitleValid && isAuthorValid;
+  };
+
   const updateAuthorsData = (authors: string[]) => {
     let authorsClean: string[] = [];
     authors.forEach((author) => {
       if (!author.includes(",") && author !== "") {
-        authorsClean.push(author);
+        authorsClean.push(xssSanitize(author));
       }
     });
     setBookData({ ...bookData, authors: authorsClean });
@@ -33,7 +51,7 @@ const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
     let categoriesClean: string[] = [];
     authors.forEach((category) => {
       if (!category.includes(",") && category !== "") {
-        categoriesClean.push(category);
+        categoriesClean.push(xssSanitize(category));
       }
     });
     setBookData({ ...bookData, categories: categoriesClean });
@@ -43,20 +61,21 @@ const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const value = e.target.value;
-    setBookData({ ...bookData, [e.target.name]: value });
+    setBookData({ ...bookData, [e.target.name]: xssSanitize(value) });
   };
 
   const handleAddBook = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    await fetch("/api/books/addBook", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(bookData),
-    });
-    onSubmit();
+    if (isBookDataValid(bookData)) {
+      await fetch("/api/books/addBook", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(bookData),
+      });
+      onSubmit();
+    }
   };
 
   return (
@@ -64,15 +83,22 @@ const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
       <FormInput
         type="text"
         placeholder="Title"
-        required
         name="title"
         value={bookData.title}
         onChange={updateBookData}
+      />
+      <IncorrectInput
+        display={isBookDataInvalid.titleInvalid}
+        message={"Title is required"}
       />
       <TagsInput
         name={"authors"}
         placeholder={"Author"}
         onChange={updateAuthorsData}
+      />
+      <IncorrectInput
+        display={isBookDataInvalid.authorInvalid}
+        message={"At least one author is required"}
       />
       <FormInput
         type="text"

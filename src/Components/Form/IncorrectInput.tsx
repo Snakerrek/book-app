@@ -7,7 +7,7 @@ type Props = {
 };
 
 const RedParagraph = styled.p`
-  color: red;
+  color: red !important;
   margin-top: -20px;
 `;
 
