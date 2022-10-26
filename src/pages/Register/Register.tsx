@@ -8,6 +8,13 @@ import Form from "../../Components/Form/Form";
 import FormInput from "../../Components/Form/FormInput";
 import FormTitleContainer from "../../Components/Form/FormTitleContainer";
 import FormSubmitButton from "../../Components/Form/FormSubmitButton";
+import IncorrectInput from "../../Components/Form/IncorrectInput";
+import {
+  validateEmail,
+  validateNonEmpty,
+  validatePassword,
+  xssSanitize,
+} from "../../Components/Form/validators";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -16,27 +23,47 @@ const Register = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  const [invalidUsername, setInvalidUsername] = useState<boolean>(false);
+  const [invalidEmail, setInvalidEmail] = useState<boolean>(false);
+  const [invalidPassword, setInvalidPassword] = useState<boolean>(false);
+
+  const isInputValid = (user: {
+    username: string;
+    email: string;
+    password: string;
+  }) => {
+    setInvalidUsername(!validateNonEmpty(user.username));
+    setInvalidEmail(!validateEmail(user.email));
+    setInvalidPassword(!validatePassword(user.password));
+    return (
+      validateNonEmpty(user.username) &&
+      validateEmail(user.email) &&
+      validatePassword(user.password)
+    );
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const user = {
-      username: username,
-      email: email,
-      password: password,
+      username: xssSanitize(username),
+      email: xssSanitize(email),
+      password: xssSanitize(password),
     };
-
-    await fetch("/api/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.registerSuccessful) {
-          navigate("/login");
-        }
-      });
+    if (isInputValid(user)) {
+      await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(user),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.registerSuccessful) {
+            navigate("/login");
+          }
+        });
+    }
   };
 
   useEffect(() => {
@@ -61,15 +88,24 @@ const Register = () => {
             placeholder="Username"
             onChange={(e) => setUsername(e.target.value)}
           />
+          <IncorrectInput
+            message="Username is incorrect"
+            display={invalidUsername}
+          />
           <FormInput
             type="text"
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
           />
+          <IncorrectInput message="Email is incorrect" display={invalidEmail} />
           <FormInput
             type="password"
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
+          />
+          <IncorrectInput
+            message="Password is incorrect"
+            display={invalidPassword}
           />
           <FormSubmitButton type="submit">Register</FormSubmitButton>
         </Form>

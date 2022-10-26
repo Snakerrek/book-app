@@ -8,34 +8,50 @@ import Form from "../../Components/Form/Form";
 import FormInput from "../../Components/Form/FormInput";
 import FormTitleContainer from "../../Components/Form/FormTitleContainer";
 import FormSubmitButton from "../../Components/Form/FormSubmitButton";
+import IncorrectInput from "../../Components/Form/IncorrectInput";
+import {
+  validateNonEmpty,
+  xssSanitize,
+} from "../../Components/Form/validators";
 
 const Login = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  const [invalidUsername, setInvalidUsername] = useState<boolean>(false);
+  const [invalidPassword, setInvalidPassword] = useState<boolean>(false);
+
+  const isInputValid = (user: { username: string; password: string }) => {
+    setInvalidUsername(!validateNonEmpty(user.username));
+    setInvalidPassword(!validateNonEmpty(user.password));
+    return validateNonEmpty(user.username) && validateNonEmpty(user.password);
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const user = {
-      username: username,
-      password: password,
+      username: xssSanitize(username),
+      password: xssSanitize(password),
     };
 
-    fetch("/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.token) {
-          localStorage.setItem("token", data.token);
-          navigate("/");
-        }
-      });
+    if (isInputValid(user)) {
+      fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(user),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.token) {
+            localStorage.setItem("token", data.token);
+            navigate("/");
+          }
+        });
+    }
   };
 
   useEffect(() => {
@@ -58,14 +74,20 @@ const Login = () => {
           <FormInput
             type="text"
             placeholder="Username"
-            required
             onChange={(e) => setUsername(e.target.value)}
+          />
+          <IncorrectInput
+            message="Username is required"
+            display={invalidUsername}
           />
           <FormInput
             type="password"
             placeholder="Password"
-            required
             onChange={(e) => setPassword(e.target.value)}
+          />
+          <IncorrectInput
+            message="Password is required"
+            display={invalidPassword}
           />
           <FormSubmitButton type="submit">Login</FormSubmitButton>
         </Form>

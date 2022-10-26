@@ -1,10 +1,14 @@
-import { ppid } from "process";
 import React, { useState } from "react";
 import styled from "styled-components";
 import Form from "../../Components/Form/Form";
 import FormInput from "../../Components/Form/FormInput";
 import FormSubmitButton from "../../Components/Form/FormSubmitButton";
 import { getUserData } from "../../helpers";
+import {
+  validatePassword,
+  validateNonEmpty,
+} from "../../Components/Form/validators";
+import IncorrectInput from "../../Components/Form/IncorrectInput";
 
 const EditProfileWrapper = styled.div`
   text-align: center;
@@ -41,6 +45,29 @@ const EditProfile = () => {
     confirmPassword: "",
   });
 
+  const [invalidNewPassword, setInvalidNewPassword] = useState(false);
+  const [invalidPasswordConfirmation, setInvalidPasswordConfirmation] =
+    useState(false);
+  const [invalidOldPassword, setInvalidOldPassword] = useState(false);
+
+  const isInputCorrect = (
+    oldPassword: string,
+    password: string,
+    passwordConfirmation: string
+  ) => {
+    const isPasswordCorrect = validatePassword(password);
+    const isPasswordConfirmationCorrect = password === passwordConfirmation;
+    const isOldPasswordCorrect = validateNonEmpty(oldPassword);
+
+    setInvalidNewPassword(!isPasswordCorrect);
+    setInvalidPasswordConfirmation(!isPasswordConfirmationCorrect);
+    setInvalidOldPassword(!isOldPasswordCorrect);
+
+    return (
+      isPasswordCorrect && isPasswordConfirmationCorrect && isOldPasswordCorrect
+    );
+  };
+
   const updatePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPassword({ ...password, [e.target.name]: value });
@@ -49,10 +76,13 @@ const EditProfile = () => {
   const changePassword = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const userData = getUserData();
-    console.log("Change password");
+
     if (
-      password.password === password.confirmPassword &&
-      password.oldPassword
+      isInputCorrect(
+        password.oldPassword,
+        password.password,
+        password.confirmPassword
+      )
     ) {
       await fetch(`/api/user/update/${userData?.id}`, {
         method: "PUT",
@@ -76,25 +106,37 @@ const EditProfile = () => {
         <h2>Zmień hasło</h2>
         <Form onSubmit={changePassword}>
           <FormInput
-            type="text"
+            type="password"
             placeholder="Podaj stare hasło"
             name="oldPassword"
             value={password.oldPassword}
             onChange={updatePassword}
           />
+          <IncorrectInput
+            message={"You must provide old password"}
+            display={invalidOldPassword}
+          />
           <FormInput
-            type="text"
+            type="password"
             placeholder="Podaj nowe hasło"
             name="password"
             value={password.password}
             onChange={updatePassword}
           />
+          <IncorrectInput
+            message={"New password is incorrect"}
+            display={invalidNewPassword}
+          />
           <FormInput
-            type="text"
+            type="password"
             placeholder="Podaj hasło ponownie"
             name="confirmPassword"
             value={password.confirmPassword}
             onChange={updatePassword}
+          />
+          <IncorrectInput
+            message={"Passwords are not the same"}
+            display={invalidPasswordConfirmation}
           />
           <FormSubmitButton>Zmień hasło</FormSubmitButton>
         </Form>
