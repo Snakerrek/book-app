@@ -8,7 +8,7 @@ import { BsBookHalf } from "react-icons/bs";
 import { BiTimeFive } from "react-icons/bi";
 import { getUserData } from "../../helpers";
 import { TokenUserData, ReviewData, Review } from "../../types";
-
+import { UserBookDetails } from "../../types";
 const BookDetailsWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -67,7 +67,11 @@ const BookData = styled.div``;
 
 const BookRating = styled.div``;
 
-const BookActions = styled.div``;
+const BookActions = styled.div`
+  & > div {
+    display: flex;
+  }
+`;
 
 const Title = styled.div``;
 
@@ -75,6 +79,51 @@ const BookDetails = () => {
   const { id } = useParams();
   const [bookDetails, setBookDetails] = useState<AdvancedBookType | null>(null);
   const [reviewData, setReviewData] = useState<ReviewData | null>(null);
+  const [userBookDetails, setUserBookDetails] =
+    useState<UserBookDetails | null>(null);
+
+  const shelveBook = async (shelf: string) => {
+    const userData: TokenUserData | null = getUserData();
+    if (userData) {
+      const userBookDetailsJson = await fetch("/api/shelf/shelve", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          bookId: id,
+          userId: userData.id,
+          shelf: shelf,
+        }),
+      });
+      const userBookDetails: { message: string; book: UserBookDetails } =
+        await userBookDetailsJson.json();
+      setUserBookDetails(userBookDetails.book);
+    }
+  };
+
+  const fetchUserBookDetails = async () => {
+    const userData: TokenUserData | null = await getUserData();
+    if (userData) {
+      const userBookDetailsJson: Response = await fetch(
+        "/api/shelf/getUserBookData",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId: userData.id, bookId: id }),
+        }
+      );
+      console.log(userBookDetailsJson);
+      const userBookDetails: UserBookDetails = await userBookDetailsJson.json();
+      setUserBookDetails(userBookDetails);
+    }
+  };
+
+  useEffect(() => {
+    console.log(userBookDetails);
+  }, [userBookDetails]);
 
   const evalReviewData = () => {
     const reviews = bookDetails?.reviews;
@@ -105,7 +154,7 @@ const BookDetails = () => {
     });
   };
 
-  const fetchBookDetails = async (bookId: string) => {
+  const fetchBookDetails = async () => {
     const bookDetJson = await fetch(`/api/books/getDetails/${id}`);
     const bookDet = await bookDetJson.json();
     setBookDetails(bookDet);
@@ -152,7 +201,10 @@ const BookDetails = () => {
   };
 
   useEffect(() => {
-    if (id) fetchBookDetails(id);
+    if (id) {
+      fetchBookDetails();
+      fetchUserBookDetails();
+    }
     // eslint-disable-next-line
   }, [id]);
 
@@ -221,7 +273,20 @@ const BookDetails = () => {
               )}
             </div>
           </BookRating>
-          <BookActions></BookActions>
+          <BookActions>
+            <h2>Dodaj książkę na swoją półkę:</h2>
+            <div>
+              <button onClick={() => shelveBook("READ")}>Przeczytane</button>
+              <button onClick={() => shelveBook("CURRENTLY_READING")}>
+                Czytam
+              </button>
+              <button onClick={() => shelveBook("WANT_TO_READ")}>
+                Chcę przeczytać
+              </button>
+            </div>
+            <h3>Książka jest na półce: {userBookDetails?.shelf}</h3>
+            <h4>Progres: {userBookDetails?.progress}</h4>
+          </BookActions>
         </RightColumn>
       </BookDetailsContainer>
       <ReviewSection

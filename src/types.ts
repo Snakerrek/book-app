@@ -30,3 +30,9 @@ export interface ReviewData {
   reviewsCount: number;
   thisUserReview?: Review;
 }
+
+export interface UserBookDetails {
+  bookID: string;
+  progress: number;
+  shelf: string;
+}
