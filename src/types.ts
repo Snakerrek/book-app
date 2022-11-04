@@ -32,7 +32,20 @@ export interface ReviewData {
 }
 
 export interface UserBookDetails {
-  bookID: string;
+  bookId: string;
   progress: number;
   shelf: string;
+  bookDetails?: AdvancedBookType;
+}
+
+export interface UserData {
+  avatar: string;
+  username: string;
+  email: string;
+  books: UserBookDetails[];
+}
+
+export interface Shelf {
+  name: string;
+  books: UserBookDetails[];
 }

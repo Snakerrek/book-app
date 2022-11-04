@@ -116,7 +116,6 @@ const BookDetails = () => {
           body: JSON.stringify({ userId: userData.id, bookId: id }),
         }
       );
-      console.log(userBookDetailsJson);
       const userBookDetails: UserBookDetails = await userBookDetailsJson.json();
       setUserBookDetails(userBookDetails);
     }

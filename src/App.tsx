@@ -21,7 +21,8 @@ const App = (): JSX.Element => {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="bookSearch/:searchPhrase" element={<BookSearch />} />
-          <Route path="profile" element={<Profile />} />
+          <Route path="profile/:id" element={<Profile />} />
+          <Route path="profile/" element={<Profile />} />
           <Route path="editProfile" element={<EditProfile />} />
           <Route path="bookDetails/:id" element={<BookDetails />} />
         </Route>
