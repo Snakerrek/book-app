@@ -19,7 +19,9 @@ const Profile = () => {
 
   const fetchUserData = async () => {
     const userDataToken = getUserData();
-    const userDataJson = await fetch(`/api/user/get/${userDataToken?.id}`);
+    const userDataJson = await fetch(
+      `/api/user/get/${userId ? userId : userDataToken?.id}`
+    );
     const userData = await userDataJson.json();
     setUserData(userData);
     generateShelves(userData.books);
@@ -46,7 +48,7 @@ const Profile = () => {
 
   useEffect(() => {
     fetchUserData();
-  }, []);
+  }, [userId]);
 
   return (
     <ProfileWrapper>
