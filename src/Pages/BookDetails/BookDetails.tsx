@@ -81,9 +81,10 @@ const BookDetails = () => {
   const [reviewData, setReviewData] = useState<ReviewData | null>(null);
   const [userBookDetails, setUserBookDetails] =
     useState<UserBookDetails | null>(null);
+  const [userData, setUserData] = useState<TokenUserData | null>(getUserData());
+  const [progressInput, setProgressInput] = useState<number>(0);
 
   const shelveBook = async (shelf: string) => {
-    const userData: TokenUserData | null = getUserData();
     if (userData) {
       const userBookDetailsJson = await fetch("/api/shelf/shelve", {
         method: "POST",
@@ -121,17 +122,12 @@ const BookDetails = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(userBookDetails);
-  }, [userBookDetails]);
-
   const evalReviewData = () => {
     const reviews = bookDetails?.reviews;
     let starsSum = 0;
     let starsNumber = 0;
     let reviewsNumber = 0;
     let thisUserReview: Review | null = null;
-    const userData: TokenUserData | null = getUserData();
     if (reviews) {
       reviews.forEach((review) => {
         if (userData && userData.id === review.authorID) {
@@ -161,7 +157,6 @@ const BookDetails = () => {
   };
 
   const onStarRate = async (rating: number) => {
-    const userData: TokenUserData | null = getUserData();
     const reqBody = {
       bookID: bookDetails?._id,
       authorID: userData?.id,
@@ -179,7 +174,6 @@ const BookDetails = () => {
   };
 
   const onSubmitReview = async (userReview?: string) => {
-    const userData: TokenUserData | null = getUserData();
     if (userReview) {
       const reqBody = {
         bookID: bookDetails?._id,
@@ -197,6 +191,33 @@ const BookDetails = () => {
 
       const updatedBook = await updatedBookJson.json();
       setBookDetails(updatedBook.updatedBook);
+    }
+  };
+
+  const updateProgress = async (progress: number) => {
+    const userData: TokenUserData | null = getUserData();
+    if (
+      userData &&
+      bookDetails?.pageCount &&
+      progress <= parseInt(bookDetails?.pageCount) &&
+      progress >= 0
+    ) {
+      const reqBody = {
+        bookId: bookDetails?._id,
+        userId: userData.id,
+        progress: progress,
+      };
+      const resJson: Response = await fetch("/api/shelf/updateProgress", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(reqBody),
+      });
+      const res = await resJson.json();
+      if (!!res.book) {
+        setUserBookDetails(res.book);
+      }
     }
   };
 
@@ -285,7 +306,16 @@ const BookDetails = () => {
               </button>
             </div>
             <h3>Książka jest na półce: {userBookDetails?.shelf}</h3>
-            <h4>Progres: {userBookDetails?.progress}</h4>
+            <h4>
+              Progres: {userBookDetails?.progress}/{bookDetails?.pageCount}
+            </h4>
+            <input
+              type={"number"}
+              onChange={(e) => setProgressInput(parseInt(e.target.value))}
+            />
+            <button onClick={() => updateProgress(progressInput)}>
+              Update Progress
+            </button>
           </BookActions>
         </RightColumn>
       </BookDetailsContainer>
