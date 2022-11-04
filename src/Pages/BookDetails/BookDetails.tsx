@@ -129,7 +129,7 @@ const BookDetails = () => {
     let thisUserReview: Review | null = null;
     if (reviews) {
       reviews.forEach((review) => {
-        if (userData && userData.id === review.authorID) {
+        if (userData && userData.id === review.author.authorID) {
           thisUserReview = review;
         }
         if (review.review && review.review !== "") {

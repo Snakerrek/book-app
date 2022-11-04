@@ -6,8 +6,14 @@ export interface BasicBookType {
   isbn: string;
 }
 
-export interface Review {
+export interface ReviewAuthorDetails {
   authorID: string;
+  authorName: string;
+  authorAvatar: string;
+}
+
+export interface Review {
+  author: ReviewAuthorDetails;
   starRating: string;
   review: string;
 }
