@@ -57,7 +57,7 @@ const defaultTheme = {
 export const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
   }
   body {
     background-color: #F3F3F9;

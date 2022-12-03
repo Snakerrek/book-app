@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { getUserData } from "../../helpers";
 import { profileDropdownLinks } from "./ProfileDropdownLinks";
 import DropdownItem from "./DropdownItem";
+import { UserData } from "../../types";
 
 const ProfileLogoWrapper = styled.div`
   margin-left: 1rem;
@@ -13,6 +14,7 @@ const ProfileLogoWrapper = styled.div`
     border-radius: 50%;
     width: 3.5rem;
     height: 3.5rem;
+    border: 1px solid #e6e6e6;
   }
 `;
 
@@ -51,11 +53,20 @@ const DropdownMenu = styled.div`
 
 const ProfileDropdown = () => {
   const [open, setOpen] = useState(false);
-  const userData = getUserData();
+  const [userData, setUserData] = useState<UserData | null>(null);
 
   const menuRef = useRef<HTMLDivElement>(null);
 
+  const fetchUserData = async () => {
+    const userDataToken = getUserData();
+    const userDataJson = await fetch(`/api/user/get/${userDataToken?.id}`);
+    const userData = await userDataJson.json();
+    setUserData(userData);
+  };
+
   useEffect(() => {
+    fetchUserData();
+
     const handler = (e: any) => {
       if (!menuRef?.current?.contains(e.target)) {
         setOpen(false);
@@ -76,15 +87,10 @@ const ProfileDropdown = () => {
           setOpen(!open);
         }}
       >
-        <img
-          src={
-            "https://i.pinimg.com/474x/de/58/7f/de587fa7cf12f1915024ad3a370810d4.jpg"
-          }
-          alt="Profile"
-        />
+        {userData?.avatar && <img src={userData?.avatar} alt="Profile" />}
       </ProfileLogoWrapper>
       <DropdownMenu isOpen={open}>
-        <h3>{userData?.userName}</h3>
+        <h3>{userData?.username}</h3>
         <ul>
           {profileDropdownLinks.map((link) => (
             <DropdownItem

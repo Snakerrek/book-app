@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import ProfileCard from "../../Components/Profile/ProfileCard";
 import { getUserData } from "../../helpers";
 import { Shelf, UserBookDetails, UserData } from "../../types";
+
+const Title = styled.div`
+  text-align: center;
+`;
 
 const ProfileWrapper = styled.div`
   display: flex;
@@ -51,32 +56,32 @@ const Profile = () => {
   }, [userId]);
 
   return (
-    <ProfileWrapper>
-      <div>
-        <h2>Profile data:</h2>
-        <p>Username: {userData?.username}</p>
-        <p>Email: {userData?.email}</p>
-        <p>Avatar: {userData?.avatar}</p>
-      </div>
-      <div>
-        <h2>Book shelves:</h2>
-        {shelves.map((shelf) => (
-          <div key={shelf.name}>
-            <h3>{shelf.name}</h3>
-            <ul>
-              {shelf.books.map((book) => (
-                <div
-                  key={book.bookId}
-                  onClick={() => redirectToBookDetails(book.bookId)}
-                >
-                  <li key={book.bookId}>{book.bookDetails?.title}</li>
-                </div>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-    </ProfileWrapper>
+    <>
+      <Title>
+        <h1> Profil </h1>
+      </Title>
+      <ProfileWrapper>
+        {userData && <ProfileCard userData={userData} />}
+        <div>
+          <h2>Book shelves:</h2>
+          {shelves.map((shelf) => (
+            <div key={shelf.name}>
+              <h3>{shelf.name}</h3>
+              <ul>
+                {shelf.books.map((book) => (
+                  <div
+                    key={book.bookId}
+                    onClick={() => redirectToBookDetails(book.bookId)}
+                  >
+                    <li key={book.bookId}>{book.bookDetails?.title}</li>
+                  </div>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </ProfileWrapper>
+    </>
   );
 };
 

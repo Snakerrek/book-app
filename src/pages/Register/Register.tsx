@@ -15,6 +15,7 @@ import {
   validatePassword,
   xssSanitize,
 } from "../../Components/Form/validators";
+import { getAvatar } from "../../avatarsService";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ const Register = () => {
     username: string;
     email: string;
     password: string;
+    avatar: string | undefined;
   }) => {
     setInvalidUsername(!validateNonEmpty(user.username));
     setInvalidEmail(!validateEmail(user.email));
@@ -48,6 +50,7 @@ const Register = () => {
       username: xssSanitize(username),
       email: xssSanitize(email),
       password: xssSanitize(password),
+      avatar: getAvatar("default")?.url ? getAvatar("default")?.url : "",
     };
     if (isInputValid(user)) {
       await fetch("/api/auth/register", {

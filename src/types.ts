@@ -63,3 +63,9 @@ export enum ShelfNames {
   WANT_TO_READ = "*Chcę przeczytać*",
   READ = "*Przeczytana*",
 }
+
+export interface Avatar {
+  name: string;
+  url: string;
+  isAvailable: boolean;
+}
