@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { BasicBookType } from "../../types";
 import { Link } from "react-router-dom";
+import BookCoverPlaceholder from "../BookCoverPlaceholder/BookCoverPlaceholder";
 
 type Props = {
   book: BasicBookType;
@@ -14,7 +15,7 @@ const OuterWrapper = styled.div`
 const BookThumbnailWrapper = styled.div`
   background-color: ${(props) => props.theme.backgroundColors.white};
   border-radius: 10px;
-  max-width: 250px;
+  width: 250px;
   box-shadow: ${(props) => props.theme.shadows.lightGreyShadow};
   display: flex;
   flex-direction: column;
@@ -23,7 +24,8 @@ const BookThumbnailWrapper = styled.div`
   & img {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    max-width: 100%;
+    width: 250px;
+    height: 355px;
   }
 
   & > div {
@@ -53,7 +55,12 @@ const BookThumbnail = ({ book }: Props) => {
     <OuterWrapper>
       <Link to={`/bookDetails/${book._id}`} style={{ textDecoration: "none" }}>
         <BookThumbnailWrapper>
-          <img src={book.cover} alt={`${book.title} cover`} />
+          {book.cover ? (
+            <img src={book.cover} alt={`${book.title} cover`} />
+          ) : (
+            <BookCoverPlaceholder title={book.title} authors={book.authors} />
+          )}
+
           <div>
             <h3>{book.title}</h3>
           </div>

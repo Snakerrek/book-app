@@ -22,6 +22,8 @@ export interface AdvancedBookType extends BasicBookType {
   description: string;
   pageCount: string;
   categories: string[];
+  publisher: string;
+  publishedDate: string;
   reviews: Review[];
 }
 

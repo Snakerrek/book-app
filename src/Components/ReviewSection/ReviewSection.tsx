@@ -35,6 +35,7 @@ type Props = {
 
 const ReviewSection = (props: Props) => {
   const [userReview, setUserReview] = useState<string>();
+  console.log(props.reviews, "reviews");
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

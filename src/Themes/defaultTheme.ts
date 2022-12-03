@@ -18,6 +18,7 @@ const defaultTheme = {
   backgroundColors: {
     grey: "#F3F3F9",
     white: "#FFFFFF",
+    brown: "#98572B",
   },
   colors: {
     purple: "#847DFA",

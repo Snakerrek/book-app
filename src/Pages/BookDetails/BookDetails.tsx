@@ -9,6 +9,7 @@ import { BiTimeFive } from "react-icons/bi";
 import { getUserData } from "../../helpers";
 import { TokenUserData, ReviewData, Review } from "../../types";
 import { UserBookDetails } from "../../types";
+import BookCoverPlaceholder from "../../Components/BookCoverPlaceholder/BookCoverPlaceholder";
 const BookDetailsWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -63,9 +64,21 @@ const BookCover = styled.div`
   }
 `;
 
-const BookData = styled.div``;
+const BookData = styled.div`
+  svg {
+    margin: 0 0.25rem;
+    font-size: 1.5rem;
+  }
+`;
 
-const BookRating = styled.div``;
+const BookRating = styled.div`
+  div {
+    margin: 0.25rem 0;
+  }
+  span {
+    margin: 0 0.25rem;
+  }
+`;
 
 const BookActions = styled.div`
   & > div {
@@ -248,22 +261,33 @@ const BookDetails = () => {
       <BookDetailsContainer>
         <LeftColumn>
           <BookCover>
-            <img src={bookDetails?.cover} alt={bookDetails?.title} />
+            {bookDetails?.cover ? (
+              <img src={bookDetails?.cover} alt={bookDetails?.title} />
+            ) : (
+              <BookCoverPlaceholder
+                title={bookDetails?.title}
+                authors={bookDetails?.authors}
+              />
+            )}
           </BookCover>
         </LeftColumn>
         <CenterColumn>
           <BookData>
             <h2>{bookDetails?.authors.join(", ")}</h2>
             <h3>{bookDetails?.categories.join(", ")}</h3>
-            <div>
-              <BsBookHalf />
-              <span>{bookDetails?.pageCount + "str."}</span>
-              <BiTimeFive />
-              <span>
-                {bookDetails?.pageCount && getReadTime(bookDetails.pageCount)}
-              </span>
-            </div>
+            {bookDetails?.pageCount && (
+              <div>
+                <BsBookHalf />
+                <span>{bookDetails?.pageCount + "str."}</span>
+                <BiTimeFive />
+                <span>
+                  {bookDetails?.pageCount && getReadTime(bookDetails.pageCount)}
+                </span>
+              </div>
+            )}
             <p>ISBN: {bookDetails?.isbn}</p>
+            <p>Wydawnictwo: {bookDetails?.publisher}</p>
+            <p>Data wydania: {bookDetails?.publishedDate}</p>
             <p>{bookDetails?.description}</p>
           </BookData>
         </CenterColumn>
@@ -272,8 +296,9 @@ const BookDetails = () => {
             <div>ŚREDNIA OCEN</div>
             <div>{reviewData?.starRatingAvg} / 10</div>
             <div>
-              <span>{reviewData?.reviewsCount} OPINII</span>
               <span>{reviewData?.starRatingsCount} OCEN</span>
+              <span>-</span>
+              <span>{reviewData?.reviewsCount} OPINII</span>
             </div>
             <div>
               <p>
@@ -305,16 +330,20 @@ const BookDetails = () => {
               </button>
             </div>
             <h3>Książka jest na półce: {userBookDetails?.shelf}</h3>
-            <h4>
-              Progres: {userBookDetails?.progress}/{bookDetails?.pageCount}
-            </h4>
-            <input
-              type={"number"}
-              onChange={(e) => setProgressInput(parseInt(e.target.value))}
-            />
-            <button onClick={() => updateProgress(progressInput)}>
-              Update Progress
-            </button>
+            {bookDetails?.pageCount && (
+              <>
+                <h4>
+                  Progres: {userBookDetails?.progress}/{bookDetails?.pageCount}
+                </h4>
+                <input
+                  type={"number"}
+                  onChange={(e) => setProgressInput(parseInt(e.target.value))}
+                />
+                <button onClick={() => updateProgress(progressInput)}>
+                  Update Progress
+                </button>
+              </>
+            )}
           </BookActions>
         </RightColumn>
       </BookDetailsContainer>

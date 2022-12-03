@@ -12,6 +12,8 @@ import IncorrectInput from "../Form/IncorrectInput";
 const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
   const [bookData, setBookData] = useState<AdvancedBookType>({
     title: "",
+    publishedDate: "",
+    publisher: "",
     cover: "",
     authors: [""],
     isbn: "",
