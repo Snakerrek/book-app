@@ -13,6 +13,7 @@ import Register from "./Pages/Register/Register";
 import BookDetails from "./Pages/BookDetails/BookDetails";
 import EditProfile from "./Pages/EditProfile/EditProfile";
 import Logout from "./Pages/Logout/Logout";
+import BookList from "./Pages/BookList/BookList";
 
 const App = (): JSX.Element => {
   return (
@@ -21,10 +22,13 @@ const App = (): JSX.Element => {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="bookSearch/:searchPhrase" element={<BookSearch />} />
+          <Route path="bookSearch/" element={<BookSearch />} />
           <Route path="profile/:userId" element={<Profile />} />
           <Route path="profile/" element={<Profile />} />
           <Route path="editProfile" element={<EditProfile />} />
           <Route path="bookDetails/:id" element={<BookDetails />} />
+          <Route path="bookList/" element={<BookList />} />
+          <Route path="bookList/:id" element={<BookList />} />
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />

@@ -1,8 +1,10 @@
 import React from "react";
+import LoadingOverlay from "../../Components/LoadingOverlay/LoadingOverlay";
 
 const Home = () => {
   return (
-    <div>
+    <>
+      <LoadingOverlay />
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
         mollis elit ante, vel varius nisi suscipit sed. Vestibulum sed rhoncus
@@ -227,7 +229,7 @@ const Home = () => {
         semper lectus ultricies tincidunt. Integer eget tincidunt purus.
         Phasellus porta imperdiet mauris eget ultricies.
       </p>
-    </div>
+    </>
   );
 };
 

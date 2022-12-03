@@ -13,6 +13,7 @@ import {
   validateNonEmpty,
   xssSanitize,
 } from "../../Components/Form/validators";
+import LoadingOverlay from "../../Components/LoadingOverlay/LoadingOverlay";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -67,6 +68,7 @@ const Login = () => {
   return (
     <AuthPageLayout>
       <>
+        <LoadingOverlay />
         <FormTitleContainer>
           <h3>Login</h3>
         </FormTitleContainer>

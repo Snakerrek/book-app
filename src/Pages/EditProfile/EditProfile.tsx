@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import ChangeAvatarForm from "../../Components/EditProfileForms/ChangeAvatarForm";
 import ChangePasswordForm from "../../Components/EditProfileForms/ChangePasswordForm";
+import LoadingOverlay from "../../Components/LoadingOverlay/LoadingOverlay";
 import { getUserData } from "../../helpers";
 import { UserData } from "../../types";
 
@@ -34,6 +35,7 @@ const EditProfile = () => {
 
   return (
     <>
+      <LoadingOverlay />
       <Title> Edytuj profil </Title>
       <EditProfileWrapper>
         {userData && (

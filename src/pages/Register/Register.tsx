@@ -16,6 +16,7 @@ import {
   xssSanitize,
 } from "../../Components/Form/validators";
 import { getAvatar } from "../../avatarsService";
+import LoadingOverlay from "../../Components/LoadingOverlay/LoadingOverlay";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -82,6 +83,7 @@ const Register = () => {
   return (
     <AuthPageLayout>
       <>
+        <LoadingOverlay />
         <FormTitleContainer>
           <h3>Register</h3>
         </FormTitleContainer>

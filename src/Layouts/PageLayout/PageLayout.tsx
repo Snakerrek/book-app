@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import LoadingOverlay from "../../Components/LoadingOverlay/LoadingOverlay";
 import Navbar from "../../Components/Navbar/Navbar";
 import Sidebar from "../../Components/SideBar/SideBar";
 
@@ -37,7 +38,10 @@ const PageLayout = () => {
           <Sidebar />
           <Navbar />
           <ContentWrapper>
-            <Outlet />
+            <>
+              <LoadingOverlay />
+              <Outlet />
+            </>
           </ContentWrapper>
         </>
       )}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import LoadingOverlay from "../../Components/LoadingOverlay/LoadingOverlay";
 import ProfileCard from "../../Components/Profile/ProfileCard";
 import { getUserData } from "../../helpers";
 import { Shelf, UserBookDetails, UserData } from "../../types";
@@ -57,6 +58,7 @@ const Profile = () => {
 
   return (
     <>
+      <LoadingOverlay />
       <Title>
         <h1> Profil </h1>
       </Title>

@@ -5,6 +5,7 @@ import BookThumbnail from "../../Components/BookThumbnail/BookThumbnail";
 import { BasicBookType } from "../../types";
 import AddBookForm from "../../Components/AddBookForm/AddBookForm";
 import Modal from "../../Components/Modal/Modal";
+import LoadingOverlay from "../../Components/LoadingOverlay/LoadingOverlay";
 
 const BookSearchWrapper = styled.div`
   display: flex;
@@ -52,12 +53,24 @@ const BookSearch = () => {
     setBooks(books);
   };
 
+  const fetchAllBooks = async () => {
+    const jsonBooks = await fetch(`/api/books/getAllBooks`);
+    const books: BasicBookType[] = await jsonBooks.json();
+    setBooks(books);
+  };
+
   useEffect(() => {
-    if (searchPhrase) fetchBooks(searchPhrase);
+    console.log(searchPhrase);
+    if (searchPhrase) {
+      fetchBooks(searchPhrase);
+    } else {
+      fetchAllBooks();
+    }
   }, [searchPhrase]);
 
   return (
     <BookSearchWrapper>
+      <LoadingOverlay />
       {books && books.length > 0 ? (
         books.map((book, index) => (
           <BookThumbnail book={book} key={`bookThumbnail-${index}`} />

@@ -11,6 +11,7 @@ import { TokenUserData, ReviewData, Review } from "../../types";
 import { UserBookDetails } from "../../types";
 import BookCoverPlaceholder from "../../Components/BookCoverPlaceholder/BookCoverPlaceholder";
 import BookActions from "../../Components/BookDetails/BookActions";
+import LoadingOverlay from "../../Components/LoadingOverlay/LoadingOverlay";
 const BookDetailsWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -95,7 +96,6 @@ const BookDetails = () => {
   const [userData, setUserData] = useState<TokenUserData | null>(getUserData());
 
   const fetchUserBookDetails = async () => {
-    const userData: TokenUserData | null = await getUserData();
     if (userData) {
       const userBookDetailsJson: Response = await fetch(
         "/api/shelf/getUserBookData",
@@ -184,33 +184,6 @@ const BookDetails = () => {
     }
   };
 
-  const updateProgress = async (progress: number) => {
-    const userData: TokenUserData | null = getUserData();
-    if (
-      userData &&
-      bookDetails?.pageCount &&
-      progress <= parseInt(bookDetails?.pageCount) &&
-      progress >= 0
-    ) {
-      const reqBody = {
-        bookId: bookDetails?._id,
-        userId: userData.id,
-        progress: progress,
-      };
-      const resJson: Response = await fetch("/api/shelf/updateProgress", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(reqBody),
-      });
-      const res = await resJson.json();
-      if (!!res.book) {
-        setUserBookDetails(res.book);
-      }
-    }
-  };
-
   useEffect(() => {
     if (id) {
       fetchBookDetails();
@@ -233,6 +206,7 @@ const BookDetails = () => {
 
   return (
     <BookDetailsWrapper>
+      <LoadingOverlay />
       <Title>
         <h1>{bookDetails?.title}</h1>
       </Title>

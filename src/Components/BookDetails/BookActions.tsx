@@ -129,9 +129,9 @@ const BookActions = (props: Props) => {
 
   return (
     <BookActionsContainer>
-      <h2>Półka:</h2>
       {userBookDetails?.shelf ? (
         <>
+          <h2>Półka:</h2>
           <h3>
             {ShelfNames[userBookDetails.shelf as keyof typeof ShelfNames]}
           </h3>
