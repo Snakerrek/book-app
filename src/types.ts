@@ -68,4 +68,5 @@ export interface Avatar {
   name: string;
   url: string;
   isAvailable: boolean;
+  isChoosen?: boolean;
 }

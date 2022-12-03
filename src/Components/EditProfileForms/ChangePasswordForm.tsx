@@ -7,24 +7,8 @@ import {
   validateNonEmpty,
 } from "../../Components/Form/validators";
 import IncorrectInput from "../../Components/Form/IncorrectInput";
-import styled from "styled-components";
 import { getUserData } from "../../helpers";
-
-const FormGroup = styled.div`
-  background-color: ${(p) => p.theme.backgroundColors.white};
-  max-width: 300px;
-  padding: 15px;
-  border-radius: 5px;
-
-  & h2 {
-    margin: 0;
-    text-align: center;
-  }
-
-  & form {
-    margin: 10px;
-  }
-`;
+import FormGroup from "./FormGroup";
 
 const ChangePasswordForm = () => {
   const [password, setPassword] = useState<{
@@ -91,7 +75,7 @@ const ChangePasswordForm = () => {
     }
   };
   return (
-    <FormGroup>
+    <FormGroup maxWidth="300px">
       <h2>Zmień hasło</h2>
       <Form onSubmit={changePassword}>
         <FormInput
