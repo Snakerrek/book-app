@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Form from "../Form/Form";
 import TextArea from "../Form/TextArea";
 import FormSubmitButton from "../Form/FormSubmitButton";
-import ReviewCard from "../ReviewCard/ReviewCard";
+import ReviewCard from "./ReviewCard";
 
 const ReviewSectionWrapper = styled.div`
   display: flex;
@@ -35,7 +35,6 @@ type Props = {
 
 const ReviewSection = (props: Props) => {
   const [userReview, setUserReview] = useState<string>();
-  console.log(props.reviews, "reviews");
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

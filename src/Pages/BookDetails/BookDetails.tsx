@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import StarRating from "../../Components/StarRating/StarRating";
-import ReviewSection from "../../Components/ReviewSection/ReviewSection";
-import { AdvancedBookType } from "../../types";
+import ReviewSection from "../../Components/BookDetails/ReviewSection";
+import { AdvancedBookType, ShelfNames } from "../../types";
 import { BsBookHalf } from "react-icons/bs";
 import { BiTimeFive } from "react-icons/bi";
 import { getUserData } from "../../helpers";
 import { TokenUserData, ReviewData, Review } from "../../types";
 import { UserBookDetails } from "../../types";
 import BookCoverPlaceholder from "../../Components/BookCoverPlaceholder/BookCoverPlaceholder";
+import BookActions from "../../Components/BookDetails/BookActions";
 const BookDetailsWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -69,6 +70,9 @@ const BookData = styled.div`
     margin: 0 0.25rem;
     font-size: 1.5rem;
   }
+  p {
+    text-align: justify;
+  }
 `;
 
 const BookRating = styled.div`
@@ -77,12 +81,6 @@ const BookRating = styled.div`
   }
   span {
     margin: 0 0.25rem;
-  }
-`;
-
-const BookActions = styled.div`
-  & > div {
-    display: flex;
   }
 `;
 
@@ -95,26 +93,6 @@ const BookDetails = () => {
   const [userBookDetails, setUserBookDetails] =
     useState<UserBookDetails | null>(null);
   const [userData, setUserData] = useState<TokenUserData | null>(getUserData());
-  const [progressInput, setProgressInput] = useState<number>(0);
-
-  const shelveBook = async (shelf: string) => {
-    if (userData) {
-      const userBookDetailsJson = await fetch("/api/shelf/shelve", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          bookId: id,
-          userId: userData.id,
-          shelf: shelf,
-        }),
-      });
-      const userBookDetails: { message: string; book: UserBookDetails } =
-        await userBookDetailsJson.json();
-      setUserBookDetails(userBookDetails.book);
-    }
-  };
 
   const fetchUserBookDetails = async () => {
     const userData: TokenUserData | null = await getUserData();
@@ -318,33 +296,14 @@ const BookDetails = () => {
               )}
             </div>
           </BookRating>
-          <BookActions>
-            <h2>Dodaj książkę na swoją półkę:</h2>
-            <div>
-              <button onClick={() => shelveBook("READ")}>Przeczytane</button>
-              <button onClick={() => shelveBook("CURRENTLY_READING")}>
-                Czytam
-              </button>
-              <button onClick={() => shelveBook("WANT_TO_READ")}>
-                Chcę przeczytać
-              </button>
-            </div>
-            <h3>Książka jest na półce: {userBookDetails?.shelf}</h3>
-            {bookDetails?.pageCount && (
-              <>
-                <h4>
-                  Progres: {userBookDetails?.progress}/{bookDetails?.pageCount}
-                </h4>
-                <input
-                  type={"number"}
-                  onChange={(e) => setProgressInput(parseInt(e.target.value))}
-                />
-                <button onClick={() => updateProgress(progressInput)}>
-                  Update Progress
-                </button>
-              </>
-            )}
-          </BookActions>
+          {bookDetails && userBookDetails && (
+            <BookActions
+              bookDetails={bookDetails}
+              userBookDetails={userBookDetails}
+              userData={userData}
+              setUserBookDetails={setUserBookDetails}
+            />
+          )}
         </RightColumn>
       </BookDetailsContainer>
       <ReviewSection

@@ -57,3 +57,9 @@ export interface Shelf {
   name: string;
   books: UserBookDetails[];
 }
+
+export enum ShelfNames {
+  CURRENTLY_READING = "*Aktualnie czytam*",
+  WANT_TO_READ = "*Chcę przeczytać*",
+  READ = "*Przeczytana*",
+}
