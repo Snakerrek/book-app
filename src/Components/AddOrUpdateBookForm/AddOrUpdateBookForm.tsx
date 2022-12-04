@@ -8,12 +8,24 @@ import TextArea from "../Form/TextArea";
 import TagsInput from "../Form/TagsInput";
 import { validateNonEmpty, xssSanitize } from "../Form/validators";
 import IncorrectInput from "../Form/IncorrectInput";
+import styled from "styled-components";
 
 interface Props {
   onSubmit: () => void;
   initialBookData?: AdvancedBookType;
   updateBookDataState?: (bookData: AdvancedBookType) => void;
 }
+
+const CoverPeak = styled.div<{ backgroundImage: string }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  width: auto;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url(${(props) => props.backgroundImage});
+`;
 
 const AddOrUpdateBookForm = ({
   onSubmit,
@@ -124,11 +136,26 @@ const AddOrUpdateBookForm = ({
         display={isBookDataInvalid.authorInvalid}
         message={"At least one author is required"}
       />
+      {!!bookData.cover && <CoverPeak backgroundImage={bookData.cover} />}
       <FormInput
         type="text"
         placeholder="Cover"
         name="cover"
         value={bookData.cover}
+        onChange={updateBookData}
+      />
+      <FormInput
+        type="text"
+        placeholder="Publisher"
+        name="publisher"
+        value={bookData.publisher}
+        onChange={updateBookData}
+      />
+      <FormInput
+        type="text"
+        placeholder="Published date"
+        name="publishedDate"
+        value={bookData.publishedDate}
         onChange={updateBookData}
       />
       <TextArea

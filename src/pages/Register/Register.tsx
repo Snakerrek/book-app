@@ -15,7 +15,7 @@ import {
   validatePassword,
   xssSanitize,
 } from "../../Components/Form/validators";
-import { getAvatar } from "../../avatarsService";
+import { getAvatar } from "../../configService";
 import LoadingOverlay from "../../Components/LoadingOverlay/LoadingOverlay";
 
 const Register = () => {

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { UserData } from "../../types";
 import FormGroup from "./FormGroup";
-import { getAvailableAvatars } from "../../avatarsService";
+import { getAvailableAvatars } from "../../configService";
 import { Avatar } from "../../types";
 import Form from "../Form/Form";
 import FormSubmitButton from "../Form/FormSubmitButton";
