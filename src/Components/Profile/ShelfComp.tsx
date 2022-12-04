@@ -69,7 +69,7 @@ const ShelfComp = (props: Props) => {
   useLayoutEffect(() => {
     if (ref.current && ref.current.offsetWidth !== 0) {
       const numberOfBooksToDisplay = Math.floor(ref.current.offsetWidth / 100);
-      setBooks(shelfData.books.slice(0, numberOfBooksToDisplay));
+      setBooks(shelfData.books.slice(0, numberOfBooksToDisplay).reverse());
     }
     //eslint-disable-next-line
   }, []);

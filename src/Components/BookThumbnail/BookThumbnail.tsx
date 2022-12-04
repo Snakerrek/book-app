@@ -60,7 +60,6 @@ const BookThumbnail = ({ book }: Props) => {
           ) : (
             <BookCoverPlaceholder title={book.title} authors={book.authors} />
           )}
-
           <div>
             <h3>{book.title}</h3>
           </div>

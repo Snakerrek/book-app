@@ -4,6 +4,7 @@ import styled from "styled-components";
 import LoadingOverlay from "../../Components/LoadingOverlay/LoadingOverlay";
 import ProfileCard from "../../Components/Profile/ProfileCard";
 import ShelfComp from "../../Components/Profile/ShelfComp";
+import UserStats from "../../Components/Profile/UserStats";
 import { getUserData } from "../../helpers";
 import { Shelf, UserBookDetails, UserData } from "../../types";
 
@@ -77,6 +78,7 @@ const Profile = () => {
       </Title>
       <ProfileWrapper>
         {userData && <ProfileCard userData={userData} />}
+        <UserStats />
         <ShelvesWrapper>
           {shelves.map((shelf) => (
             <ShelfComp
