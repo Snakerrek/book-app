@@ -54,6 +54,7 @@ const Profile = () => {
 
   useEffect(() => {
     fetchUserData();
+    // eslint-disable-next-line
   }, [userId]);
 
   return (

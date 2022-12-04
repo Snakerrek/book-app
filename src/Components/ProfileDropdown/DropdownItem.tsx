@@ -5,11 +5,13 @@ import styled from "styled-components";
 
 const DropdownItemLi = styled.li`
   display: flex;
+  align-items: center;
   margin: 10px auto;
   padding: 10px 0;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
+  cursor: pointer;
 
-  &:hover a {
+  &:hover p {
     color: rgb(212, 33, 9);
     cursor: pointer;
   }
@@ -25,9 +27,10 @@ const DropdownItemLi = styled.li`
     opacity: 0.5;
   }
 
-  & a {
+  & p {
     max-width: 100px;
     margin-left: 10px;
+    margin-bottom: 0;
   }
 `;
 
@@ -50,7 +53,7 @@ const DropdownItem = (props: Props) => {
       }}
     >
       <Icon />
-      <a> {text} </a>
+      <p> {text} </p>
     </DropdownItemLi>
   );
 };

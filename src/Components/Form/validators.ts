@@ -4,7 +4,7 @@ export const xssSanitize = (value: string) => {
 
 // validator to check for sql injection
 export const validateSQLInjection = (value: string) => {
-  const sqlRegex = /(\%27)|(\')|(\-\-)|(\%23)|(#)/;
+  const sqlRegex = /(%27)|(')|(--)|(%23)|(#)/;
   return !sqlRegex.test(value);
 };
 

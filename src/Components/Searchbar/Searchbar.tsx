@@ -70,6 +70,7 @@ const Searchbar = () => {
 
   useEffect(() => {
     redirectToSearch();
+    //eslint-disable-next-line
   }, [debouncedSearchPhrase]);
 
   return (

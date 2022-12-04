@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import StarRating from "../../Components/StarRating/StarRating";
 import ReviewSection from "../../Components/BookDetails/ReviewSection";
-import { AdvancedBookType, ShelfNames } from "../../types";
+import { AdvancedBookType } from "../../types";
 import { BsBookHalf } from "react-icons/bs";
 import { BiTimeFive } from "react-icons/bi";
 import { getUserData } from "../../helpers";
@@ -106,7 +106,7 @@ const BookDetails = () => {
   const [reviewData, setReviewData] = useState<ReviewData | null>(null);
   const [userBookDetails, setUserBookDetails] =
     useState<UserBookDetails | null>(null);
-  const [userData, setUserData] = useState<TokenUserData | null>(getUserData());
+  const [userData] = useState<TokenUserData | null>(getUserData());
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
 
   const toggleEditModal = () => {
@@ -212,6 +212,7 @@ const BookDetails = () => {
 
   useEffect(() => {
     evalReviewData();
+    // eslint-disable-next-line
   }, [bookDetails, bookDetails?.reviews]);
 
   const getReadTime = (pageCountStr: string) => {

@@ -26,6 +26,11 @@ const StarRating = ({
     setRating(initialStarValue);
   }, [initialStarValue]);
 
+  useEffect(() => {
+    console.log("rating", rating);
+    console.log("hoveredStar", hoveredStar);
+  }, [rating, hoveredStar]);
+
   return (
     <StarRatingWrapper>
       {[...Array(10)].map((_, index) => {
@@ -37,9 +42,7 @@ const StarRating = ({
               name="rating"
               value={ratingVal}
               onClick={() => {
-                if (rating > 0 && rating < 11) {
-                  onStarRate(ratingVal);
-                }
+                onStarRate(ratingVal);
                 setRating(ratingVal);
               }}
             />

@@ -8,17 +8,6 @@ import Form from "../Form/Form";
 import FormSubmitButton from "../Form/FormSubmitButton";
 import { getUserData } from "../../helpers";
 
-const CurrentAvatar = styled.div`
-  background-color: ${(p) => p.theme.backgroundColors.white};
-  max-width: 300px;
-  padding: 15px;
-  border-radius: 5px;
-  margin: 10px;
-  & img {
-    width: 100%;
-  }
-`;
-
 const AvatarsContainer = styled.div`
   display: flex;
   flex-direction: row;

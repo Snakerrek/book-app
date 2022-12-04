@@ -78,6 +78,7 @@ const Register = () => {
     })
       .then((res) => res.json())
       .then((data) => (data.isLoggedIn ? navigate("/") : null));
+    // eslint-disable-next-line
   }, []);
 
   return (
