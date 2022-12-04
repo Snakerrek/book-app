@@ -56,12 +56,15 @@ type Props = {
   placeholder: string;
   name: string;
   onChange: (authors: string[]) => void;
+  initialData?: string[];
 };
 
 const TagsInput = (props: Props) => {
-  const { placeholder, name, onChange } = props;
+  const { placeholder, name, onChange, initialData } = props;
 
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>(
+    initialData && initialData[0] !== "" ? initialData : []
+  );
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== ",") return;

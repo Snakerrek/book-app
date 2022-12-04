@@ -1,27 +1,39 @@
 import React, { useState } from "react";
 import { AdvancedBookType } from "../../types";
 
-import Form from "../../Components/Form/Form";
-import FormInput from "../../Components/Form/FormInput";
-import FormSubmitButton from "../../Components/Form/FormSubmitButton";
-import TextArea from "../../Components/Form/TextArea";
+import Form from "../Form/Form";
+import FormInput from "../Form/FormInput";
+import FormSubmitButton from "../Form/FormSubmitButton";
+import TextArea from "../Form/TextArea";
 import TagsInput from "../Form/TagsInput";
 import { validateNonEmpty, xssSanitize } from "../Form/validators";
 import IncorrectInput from "../Form/IncorrectInput";
 
-const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
-  const [bookData, setBookData] = useState<AdvancedBookType>({
-    title: "",
-    publishedDate: "",
-    publisher: "",
-    cover: "",
-    authors: [""],
-    isbn: "",
-    description: "",
-    pageCount: "",
-    categories: [""],
-    reviews: [],
-  });
+interface Props {
+  onSubmit: () => void;
+  initialBookData?: AdvancedBookType;
+  updateBookDataState?: (bookData: AdvancedBookType) => void;
+}
+
+const AddOrUpdateBookForm = ({
+  onSubmit,
+  initialBookData,
+  updateBookDataState,
+}: Props) => {
+  const [bookData, setBookData] = useState<AdvancedBookType>(
+    initialBookData || {
+      title: "",
+      publishedDate: "",
+      publisher: "",
+      cover: "",
+      authors: [""],
+      isbn: "",
+      description: "",
+      pageCount: "",
+      categories: [""],
+      reviews: [],
+    }
+  );
 
   const [isBookDataInvalid, setIsBookDataInvalid] = useState<{
     titleInvalid: boolean;
@@ -66,22 +78,31 @@ const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
     setBookData({ ...bookData, [e.target.name]: xssSanitize(value) });
   };
 
-  const handleAddBook = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAddOrUpdateBook = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isBookDataValid(bookData)) {
-      await fetch("/api/books/addBook", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(bookData),
-      });
+      const resJson = await fetch(
+        initialBookData
+          ? `api/books/updateBook/${initialBookData._id}`
+          : "/api/books/addBook",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(bookData),
+        }
+      );
+      const res = await resJson.json();
+      if (updateBookDataState) {
+        updateBookDataState(res.book);
+      }
       onSubmit();
     }
   };
 
   return (
-    <Form onSubmit={handleAddBook}>
+    <Form onSubmit={handleAddOrUpdateBook}>
       <FormInput
         type="text"
         placeholder="Title"
@@ -97,6 +118,7 @@ const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
         name={"authors"}
         placeholder={"Author"}
         onChange={updateAuthorsData}
+        initialData={bookData.authors}
       />
       <IncorrectInput
         display={isBookDataInvalid.authorInvalid}
@@ -119,6 +141,7 @@ const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
         name={"categories"}
         placeholder={"Category"}
         onChange={updateCategoriesData}
+        initialData={bookData.categories}
       />
       <FormInput
         type="number"
@@ -134,9 +157,11 @@ const AddBookForm = ({ onSubmit }: { onSubmit: () => void }) => {
         value={bookData.pageCount}
         onChange={updateBookData}
       />
-      <FormSubmitButton>Add Book</FormSubmitButton>
+      <FormSubmitButton>
+        {initialBookData ? "Edytuj książkę" : "Dodaj książkę"}
+      </FormSubmitButton>
     </Form>
   );
 };
 
-export default AddBookForm;
+export default AddOrUpdateBookForm;

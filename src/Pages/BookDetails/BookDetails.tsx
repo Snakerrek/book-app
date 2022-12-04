@@ -12,6 +12,9 @@ import { UserBookDetails } from "../../types";
 import BookCoverPlaceholder from "../../Components/BookCoverPlaceholder/BookCoverPlaceholder";
 import BookActions from "../../Components/BookDetails/BookActions";
 import LoadingOverlay from "../../Components/LoadingOverlay/LoadingOverlay";
+import BasicButton from "../../Components/BasicButton/BasicButton";
+import Modal from "../../Components/Modal/Modal";
+import AddOrUpdateBookForm from "../../Components/AddOrUpdateBookForm/AddOrUpdateBookForm";
 const BookDetailsWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -85,7 +88,17 @@ const BookRating = styled.div`
   }
 `;
 
-const Title = styled.div``;
+const Title = styled.div`
+  width: 100%;
+  text-align: center;
+  margin-bottom: 1rem;
+  position: relative;
+  button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+`;
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -94,6 +107,11 @@ const BookDetails = () => {
   const [userBookDetails, setUserBookDetails] =
     useState<UserBookDetails | null>(null);
   const [userData, setUserData] = useState<TokenUserData | null>(getUserData());
+  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+
+  const toggleEditModal = () => {
+    setIsEditModalOpen(!isEditModalOpen);
+  };
 
   const fetchUserBookDetails = async () => {
     if (userData) {
@@ -194,7 +212,7 @@ const BookDetails = () => {
 
   useEffect(() => {
     evalReviewData();
-  }, [bookDetails?.reviews]);
+  }, [bookDetails, bookDetails?.reviews]);
 
   const getReadTime = (pageCountStr: string) => {
     // read speed 1page/1min
@@ -209,6 +227,12 @@ const BookDetails = () => {
       <LoadingOverlay />
       <Title>
         <h1>{bookDetails?.title}</h1>
+        <BasicButton
+          big
+          text="Edytuj książkę"
+          onClick={toggleEditModal}
+          backgroundGradient={"pink"}
+        />
       </Title>
       <BookDetailsContainer>
         <LeftColumn>
@@ -285,6 +309,19 @@ const BookDetails = () => {
         bookId={bookDetails?._id}
         onSubmitReview={onSubmitReview}
       />
+      {isEditModalOpen && (
+        <Modal
+          title={"Edytuj książkę"}
+          midContent={
+            <AddOrUpdateBookForm
+              onSubmit={toggleEditModal}
+              initialBookData={bookDetails ? bookDetails : undefined}
+              updateBookDataState={setBookDetails}
+            />
+          }
+          onClose={toggleEditModal}
+        />
+      )}
     </BookDetailsWrapper>
   );
 };
