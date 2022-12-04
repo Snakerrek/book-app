@@ -133,7 +133,7 @@ const BookActions = (props: Props) => {
         <>
           <h2>Półka:</h2>
           <h3>
-            {ShelfNames[userBookDetails.shelf as keyof typeof ShelfNames]}
+            *{ShelfNames[userBookDetails.shelf as keyof typeof ShelfNames]}*
           </h3>
           <h2> Zmień półkę </h2>
         </>

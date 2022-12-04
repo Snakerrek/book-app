@@ -59,9 +59,9 @@ export interface Shelf {
 }
 
 export enum ShelfNames {
-  CURRENTLY_READING = "*Aktualnie czytam*",
-  WANT_TO_READ = "*Chcę przeczytać*",
-  READ = "*Przeczytana*",
+  CURRENTLY_READING = "Aktualnie czytam",
+  WANT_TO_READ = "Chcę przeczytać",
+  READ = "Przeczytane",
 }
 
 export interface Avatar {

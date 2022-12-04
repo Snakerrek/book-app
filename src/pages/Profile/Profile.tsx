@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import LoadingOverlay from "../../Components/LoadingOverlay/LoadingOverlay";
 import ProfileCard from "../../Components/Profile/ProfileCard";
+import ShelfComp from "../../Components/Profile/ShelfComp";
 import { getUserData } from "../../helpers";
 import { Shelf, UserBookDetails, UserData } from "../../types";
 
@@ -15,6 +16,17 @@ const ProfileWrapper = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
+  flex-wrap: wrap;
+`;
+
+const ShelvesWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  padding: 2rem;
+  max-width: 1000px;
 `;
 
 const Profile = () => {
@@ -46,7 +58,7 @@ const Profile = () => {
     setShelves(shelves);
   };
 
-  const redirectToBookDetails = (bookId: string) => {
+  const redirectToBookDetails = (bookId?: string) => {
     if (bookId) {
       navigate(`/bookDetails/${bookId}`);
     }
@@ -65,24 +77,15 @@ const Profile = () => {
       </Title>
       <ProfileWrapper>
         {userData && <ProfileCard userData={userData} />}
-        <div>
-          <h2>Book shelves:</h2>
+        <ShelvesWrapper>
           {shelves.map((shelf) => (
-            <div key={shelf.name}>
-              <h3>{shelf.name}</h3>
-              <ul>
-                {shelf.books.map((book) => (
-                  <div
-                    key={book.bookId}
-                    onClick={() => redirectToBookDetails(book.bookId)}
-                  >
-                    <li key={book.bookId}>{book.bookDetails?.title}</li>
-                  </div>
-                ))}
-              </ul>
-            </div>
+            <ShelfComp
+              shelfData={shelf}
+              key={shelf.name}
+              onBookClick={redirectToBookDetails}
+            />
           ))}
-        </div>
+        </ShelvesWrapper>
       </ProfileWrapper>
     </>
   );
