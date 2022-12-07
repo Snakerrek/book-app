@@ -1,5 +1,5 @@
 import { IconType } from "react-icons";
-import { HiHome } from "react-icons/hi";
+import { HiHome, HiUsers } from "react-icons/hi";
 import { FiBook } from "react-icons/fi";
 import { FaUserEdit, FaUserAlt } from "react-icons/fa";
 import { IoIosBookmarks } from "react-icons/io";
@@ -14,6 +14,7 @@ const sidebarItems: {
   { path: "/", text: "BookApp", Icon: FiBook, isLogo: true },
   { path: "/", text: "Home", Icon: HiHome },
   { path: "/bookSearch", text: "Browse Books", Icon: IoIosBookmarks },
+  { path: "/userList", text: "Users", Icon: HiUsers },
   { path: "/profile", text: "My Profile", Icon: FaUserAlt },
   { path: "/editProfile", text: "Edit Profile", Icon: FaUserEdit },
   { path: "/bookList", text: "My books", Icon: SiBookstack },

@@ -14,6 +14,7 @@ import BookDetails from "./Pages/BookDetails/BookDetails";
 import EditProfile from "./Pages/EditProfile/EditProfile";
 import Logout from "./Pages/Logout/Logout";
 import BookList from "./Pages/BookList/BookList";
+import UserList from "./Pages/UserList/UserList";
 
 const App = (): JSX.Element => {
   return (
@@ -28,7 +29,8 @@ const App = (): JSX.Element => {
           <Route path="editProfile" element={<EditProfile />} />
           <Route path="bookDetails/:id" element={<BookDetails />} />
           <Route path="bookList/" element={<BookList />} />
-          <Route path="bookList/:id" element={<BookList />} />
+          <Route path="bookList/:userId" element={<BookList />} />
+          <Route path="userList" element={<UserList />} />
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />

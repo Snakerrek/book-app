@@ -15,6 +15,7 @@ import LoadingOverlay from "../../Components/LoadingOverlay/LoadingOverlay";
 import BasicButton from "../../Components/BasicButton/BasicButton";
 import Modal from "../../Components/Modal/Modal";
 import AddOrUpdateBookForm from "../../Components/AddOrUpdateBookForm/AddOrUpdateBookForm";
+import { getGenreLabelsByValue } from "../../configService";
 const BookDetailsWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -112,6 +113,10 @@ const BookDetails = () => {
   const toggleEditModal = () => {
     setIsEditModalOpen(!isEditModalOpen);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const fetchUserBookDetails = async () => {
     if (userData) {
@@ -228,12 +233,6 @@ const BookDetails = () => {
       <LoadingOverlay />
       <Title>
         <h1>{bookDetails?.title}</h1>
-        <BasicButton
-          big
-          text="Edytuj książkę"
-          onClick={toggleEditModal}
-          backgroundGradient={"pink"}
-        />
       </Title>
       <BookDetailsContainer>
         <LeftColumn>
@@ -251,7 +250,10 @@ const BookDetails = () => {
         <CenterColumn>
           <BookData>
             <h2>{bookDetails?.authors.join(", ")}</h2>
-            <h3>{bookDetails?.categories.join(", ")}</h3>
+            <h3>
+              {bookDetails?.categories &&
+                getGenreLabelsByValue(bookDetails?.categories).join(", ")}
+            </h3>
             {bookDetails?.pageCount && (
               <div>
                 <BsBookHalf />
@@ -269,6 +271,12 @@ const BookDetails = () => {
           </BookData>
         </CenterColumn>
         <RightColumn>
+          <BasicButton
+            big
+            text="Edytuj książkę"
+            onClick={toggleEditModal}
+            backgroundGradient={"pink"}
+          />
           <BookRating>
             <div>ŚREDNIA OCEN</div>
             <div>{reviewData?.starRatingAvg} / 10</div>

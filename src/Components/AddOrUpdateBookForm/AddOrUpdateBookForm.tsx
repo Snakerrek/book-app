@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { AdvancedBookType } from "../../types";
+import Select, { MultiValue } from "react-select";
 
 import Form from "../Form/Form";
 import FormInput from "../Form/FormInput";
@@ -9,6 +10,7 @@ import TagsInput from "../Form/TagsInput";
 import { validateNonEmpty, xssSanitize } from "../Form/validators";
 import IncorrectInput from "../Form/IncorrectInput";
 import styled from "styled-components";
+import { getGenreOptions, getGenresByValue } from "../../configService";
 
 interface Props {
   onSubmit: () => void;
@@ -73,13 +75,12 @@ const AddOrUpdateBookForm = ({
     setBookData({ ...bookData, authors: authorsClean });
   };
 
-  const updateCategoriesData = (authors: string[]) => {
-    let categoriesClean: string[] = [];
-    authors.forEach((category) => {
-      if (!category.includes(",") && category !== "") {
-        categoriesClean.push(xssSanitize(category));
-      }
-    });
+  const updateCategoriesData = (
+    categories: MultiValue<{ value: string; label: string }>
+  ) => {
+    let categoriesClean: string[] = categories.map(
+      (category) => category.value
+    );
     setBookData({ ...bookData, categories: categoriesClean });
   };
 
@@ -164,11 +165,14 @@ const AddOrUpdateBookForm = ({
         value={bookData.description}
         onChange={updateBookData}
       />
-      <TagsInput
-        name={"categories"}
-        placeholder={"Category"}
-        onChange={updateCategoriesData}
-        initialData={bookData.categories}
+      <Select
+        isMulti
+        defaultValue={getGenresByValue(bookData.categories)}
+        name="categories"
+        options={getGenreOptions()}
+        className="basic-multi-select"
+        classNamePrefix="select"
+        onChange={(categories) => updateCategoriesData(categories)}
       />
       <FormInput
         type="number"

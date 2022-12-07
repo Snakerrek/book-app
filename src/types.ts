@@ -47,6 +47,7 @@ export interface UserBookDetails {
 }
 
 export interface UserData {
+  _id: string;
   avatar: string;
   username: string;
   email: string;
@@ -69,4 +70,9 @@ export interface Avatar {
   url: string;
   isAvailable: boolean;
   isChoosen?: boolean;
+}
+
+export interface GenreType {
+  value: string;
+  label: string;
 }

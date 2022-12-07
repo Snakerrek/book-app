@@ -3,6 +3,13 @@ import styled from "styled-components";
 import { UserData } from "../../types";
 import { IoIosPeople } from "react-icons/io";
 import { FaUserPlus } from "react-icons/fa";
+import { getAvatar } from "../../configService";
+import {
+  calculateReadPages,
+  calculateUserLevel,
+  getXpRequired,
+} from "../../helpers";
+import ProgressBar from "../ProgressBar/ProgressBar";
 
 type Props = {
   userData: UserData;
@@ -100,11 +107,14 @@ const Stat = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  p:first-child {
-    font-size: 1.1rem;
-    color: #dc143c;
+  p {
+    font-size: 1.3rem;
     font-weight: 700;
     margin: 0;
+  }
+  p:first-child {
+    color: #dc143c;
+    font-size: 1rem;
   }
   p:last-child {
     margin-top: 5px;
@@ -118,12 +128,40 @@ const Avatar = styled.img`
   margin-top: -50px;
 `;
 
+const LevelData = styled.div`
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p {
+    margin-top: 0;
+  }
+  h3 {
+    margin-bottom: 0;
+  }
+`;
+const Level = styled.span`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${(props) => props.theme.gradients.blue};
+  font-size: 1.5rem;
+  font-weight: 700;
+`;
+
 const ProfileCard = ({ userData }: Props) => {
+  const userLvlData = calculateUserLevel(userData.books);
   return (
     <Card>
       <Top />
       <Body>
-        <Avatar src={userData.avatar} alt="avatar" />
+        <Avatar
+          src={userData.avatar ? userData.avatar : getAvatar("default")?.url}
+          alt="avatar"
+        />
         <h2>{userData.username}</h2>
         <Followers>
           <IoIosPeople />
@@ -140,14 +178,25 @@ const ProfileCard = ({ userData }: Props) => {
         <StatsContainer>
           <Stat>
             <p>Read books</p>
-            <p>100</p>
+            <p>
+              {userData.books.filter((book) => book.shelf === "READ").length}
+            </p>
           </Stat>
           <Stat>
             <p>Read pages</p>
-            <p>100000</p>
+            <p>{calculateReadPages(userData.books)}</p>
           </Stat>
         </StatsContainer>
-        *Statystyki odnośnie expa*
+        <LevelData>
+          <h3>Level</h3>
+          <Level>{userLvlData.lvl}</Level>
+          <div>
+            <ProgressBar
+              done={userLvlData.xpLeft}
+              max={getXpRequired(userLvlData.lvl)}
+            />
+          </div>
+        </LevelData>
       </Body>
     </Card>
   );

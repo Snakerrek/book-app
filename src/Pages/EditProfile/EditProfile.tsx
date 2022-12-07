@@ -29,6 +29,7 @@ const EditProfile = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchUserData();
   }, []);
 

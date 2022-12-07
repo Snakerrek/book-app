@@ -26,11 +26,6 @@ const StarRating = ({
     setRating(initialStarValue);
   }, [initialStarValue]);
 
-  useEffect(() => {
-    console.log("rating", rating);
-    console.log("hoveredStar", hoveredStar);
-  }, [rating, hoveredStar]);
-
   return (
     <StarRatingWrapper>
       {[...Array(10)].map((_, index) => {

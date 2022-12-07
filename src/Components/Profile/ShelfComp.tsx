@@ -19,6 +19,10 @@ const SmallCoverPlaceholder = styled.div`
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
+  transition: 0.2s ease-in-out;
+  :hover {
+    transform: scale(1.05);
+  }
 
   p {
     font-size: 0.7rem;
@@ -45,6 +49,10 @@ const ShelfContainer = styled.div`
     height: 125px;
     margin: 0 0 0 10px;
     cursor: pointer;
+    transition: 0.2s ease-in-out;
+    :hover {
+      transform: scale(1.05);
+    }
   }
 
   &:after {

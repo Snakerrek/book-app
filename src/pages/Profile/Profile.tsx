@@ -70,6 +70,10 @@ const Profile = () => {
     // eslint-disable-next-line
   }, [userId]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <LoadingOverlay />
