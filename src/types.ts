@@ -46,12 +46,17 @@ export interface UserBookDetails {
   bookDetails?: AdvancedBookType;
 }
 
-export interface UserData {
+export interface BasicUserData {
   _id: string;
   avatar: string;
   username: string;
+}
+
+export interface UserData extends BasicUserData {
   email: string;
   books: UserBookDetails[];
+  followers: BasicUserData[];
+  following: BasicUserData[];
 }
 
 export interface Shelf {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { UserData } from "../../types";
 import { IoIosPeople } from "react-icons/io";
@@ -7,6 +7,7 @@ import { getAvatar } from "../../configService";
 import {
   calculateReadPages,
   calculateUserLevel,
+  getUserData,
   getXpRequired,
 } from "../../helpers";
 import ProgressBar from "../ProgressBar/ProgressBar";
@@ -153,6 +154,89 @@ const Level = styled.span`
 `;
 
 const ProfileCard = ({ userData }: Props) => {
+  const userDataToken = getUserData();
+  const [loggedUserData, setLoggedUserData] = React.useState<UserData | null>();
+  const [showFollow, setShowFollow] = React.useState<boolean>(true);
+  const [showUnfollow, setShowUnfollow] = React.useState<boolean>(false);
+
+  useEffect(() => {
+    if (
+      !userDataToken ||
+      !userDataToken.id ||
+      userDataToken.id === userData._id
+    ) {
+      setShowFollow(false);
+      setShowUnfollow(false);
+      return;
+    }
+    if (loggedUserData) {
+      if (
+        loggedUserData.following.filter(
+          (followedUser) => followedUser._id === userData._id
+        ).length > 0
+      ) {
+        setShowFollow(false);
+        setShowUnfollow(true);
+      } else {
+        setShowFollow(true);
+        setShowUnfollow(false);
+      }
+    }
+    //eslint-disable-next-line
+  }, [loggedUserData, userDataToken]);
+
+  useEffect(() => {
+    fetchLoggedInUserData();
+    //eslint-disable-next-line
+  }, []);
+
+  const fetchLoggedInUserData = async () => {
+    if (!userDataToken || !userDataToken.id) return;
+    const loggedUserJson = await fetch(`api/user/get/${userDataToken.id}`);
+    const loggedUser = await loggedUserJson.json();
+    setLoggedUserData(loggedUser);
+  };
+
+  const FollowUser = () => {
+    if (
+      !userDataToken ||
+      !userDataToken.id ||
+      userDataToken.id === userData._id
+    )
+      return;
+
+    fetch("api/user/follow", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: userDataToken.id,
+        userToFollowId: userData._id,
+      }),
+    });
+  };
+
+  const UnfollowUser = () => {
+    if (
+      !userDataToken ||
+      !userDataToken.id ||
+      userDataToken.id === userData._id
+    )
+      return;
+
+    fetch("api/user/unfollow", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: userDataToken.id,
+        userToUnfollowId: userData._id,
+      }),
+    });
+  };
+
   const userLvlData = calculateUserLevel(userData.books);
   return (
     <Card>
@@ -166,15 +250,25 @@ const ProfileCard = ({ userData }: Props) => {
         <Followers>
           <IoIosPeople />
           <span>
-            <p>100</p>
+            <p>{userData.followers.length}</p>
           </span>
         </Followers>
-        <Follow onClick={() => console.log("Follow")}>
-          <span>
-            <p>Follow </p>
-          </span>
-          <FaUserPlus />
-        </Follow>
+        {showFollow && (
+          <Follow onClick={FollowUser}>
+            <span>
+              <p>Follow </p>
+            </span>
+            <FaUserPlus />
+          </Follow>
+        )}
+        {showUnfollow && (
+          <Follow onClick={UnfollowUser}>
+            <span>
+              <p>Unfollow </p>
+            </span>
+            <FaUserPlus />
+          </Follow>
+        )}
         <StatsContainer>
           <Stat>
             <p>Read books</p>

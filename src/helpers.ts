@@ -26,7 +26,6 @@ export const getFavoriteCategory = (books: UserBookDetails[]) => {
   });
   let favoriteCategory = "";
   let maxCount = 0;
-  console.log(categories);
   categories.forEach((category) => {
     if (category.count > maxCount) {
       favoriteCategory = category.categoryName;
@@ -53,7 +52,7 @@ export const getLevelTable = () => {
 
 export const getXpRequired = (level: number) => {
   const levelTable = getLevelTable();
-  return levelTable[level - 1];
+  return levelTable[level];
 };
 
 // Calculate user level based on xp with levelTable

@@ -30,6 +30,7 @@ const BookList = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchUserData();
+    //eslint-disable-next-line
   }, []);
 
   return (
