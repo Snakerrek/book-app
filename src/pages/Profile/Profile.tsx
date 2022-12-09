@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import BasicButton from "../../Components/BasicButton/BasicButton";
 import LoadingOverlay from "../../Components/LoadingOverlay/LoadingOverlay";
 import ProfileCard from "../../Components/Profile/ProfileCard";
 import ShelfComp from "../../Components/Profile/ShelfComp";
@@ -18,6 +19,7 @@ const ProfileWrapper = styled.div`
   justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
+  padding-bottom: 5rem;
 `;
 
 const ShelvesWrapper = styled.div`
@@ -35,9 +37,9 @@ const Profile = () => {
   const [shelves, setShelves] = useState<Shelf[]>([]);
   const { userId } = useParams();
   const navigate = useNavigate();
+  const userDataToken = getUserData();
 
   const fetchUserData = async () => {
-    const userDataToken = getUserData();
     const userDataJson = await fetch(
       `/api/user/get/${userId ? userId : userDataToken?.id}`
     );
@@ -92,6 +94,15 @@ const Profile = () => {
             />
           ))}
         </ShelvesWrapper>
+        <BasicButton
+          onClick={() =>
+            navigate(`/bookList/${userId ? userId : userDataToken?.id}`)
+          }
+          text={"Wszystkie książki"}
+          big
+          backgroundGradient="orange"
+          fullLine
+        />
       </ProfileWrapper>
     </>
   );

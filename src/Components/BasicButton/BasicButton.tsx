@@ -6,15 +6,18 @@ type Props = {
   onClick: () => void;
   big?: boolean;
   backgroundGradient?: "blue" | "purple" | "orange" | "pink";
+  fullLine?: boolean;
 };
 
 interface ButtonProps {
   big?: boolean;
   backgroundGradient?: "blue" | "purple" | "orange" | "pink";
+  fullLine?: boolean;
 }
 
 const Button = styled.button<ButtonProps>`
-  max-width: fit-content;
+  width: ${(props) => props.fullLine && "80%"};
+  max-width: ${(props) => (props.fullLine ? "100%" : "fit-content")};
   padding: ${(props) => (props.big ? "15px 40px" : "10px 30px")};
   font-weight: ${(props) => props.theme.fontWeight.bold};
   font-size: ${(props) =>
@@ -40,9 +43,20 @@ const Button = styled.button<ButtonProps>`
   margin: 5px;
 `;
 
-const BasicButton = ({ text, onClick, big, backgroundGradient }: Props) => {
+const BasicButton = ({
+  text,
+  onClick,
+  big,
+  backgroundGradient,
+  fullLine,
+}: Props) => {
   return (
-    <Button onClick={onClick} big={big} backgroundGradient={backgroundGradient}>
+    <Button
+      onClick={onClick}
+      big={big}
+      backgroundGradient={backgroundGradient}
+      fullLine={fullLine}
+    >
       {text}
     </Button>
   );

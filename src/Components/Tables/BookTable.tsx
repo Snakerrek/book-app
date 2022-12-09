@@ -39,7 +39,6 @@ const Table = styled.table`
   td {
     padding: 5px 10px;
   }
-  // color every second column
   td:nth-child(odd),
   th:nth-child(odd) {
     background-color: ${(props) => props.theme.backgroundColors.greyish};
