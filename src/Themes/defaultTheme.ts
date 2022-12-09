@@ -17,6 +17,7 @@ const defaultTheme = {
   },
   backgroundColors: {
     grey: "#F3F3F9",
+    greyish: "#F2F2F2",
     white: "#FFFFFF",
     brown: "#98572B",
   },

@@ -5,22 +5,16 @@ import { calculateUserLevel, getFavoriteCategory } from "../../helpers";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
+const BookTableWrapper = styled.div`
+  overflow-x: scroll;
+`;
+
 const Table = styled.table`
   border-collapse: collapse;
   font-size: 0.9rem;
   margin: 15px;
   box-shadow: ${(props) => props.theme.shadows.lightGreyShadow};
   border-radius: 5px;
-  @media (max-width: 676px) {
-    transform-origin: top left;
-    transform: scale(0.75);
-    font-size: 0.8rem;
-  }
-  @media (max-width: 500px) {
-    transform-origin: top left;
-    transform: scale(0.5);
-    font-size: 0.6rem;
-  }
 
   img {
     width: 50px;
@@ -39,6 +33,10 @@ const Table = styled.table`
   td {
     padding: 5px 10px;
   }
+  td:nth-child(odd),
+  th:nth-child(odd) {
+    background-color: ${(props) => props.theme.backgroundColors.greyish};
+  }
   th {
     padding: 10px;
   }
@@ -56,7 +54,7 @@ const UserTable = ({ users }: Props) => {
   };
 
   return (
-    <div>
+    <BookTableWrapper>
       <Table>
         <thead>
           <tr>
@@ -90,7 +88,7 @@ const UserTable = ({ users }: Props) => {
           ))}
         </tbody>
       </Table>
-    </div>
+    </BookTableWrapper>
   );
 };
 

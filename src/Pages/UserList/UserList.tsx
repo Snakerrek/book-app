@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import UserTable from "../../Components/UserTable/UserTable";
+import UserTable from "../../Components/Tables/UserTable";
 import { UserData } from "../../types";
 
 const UserListWrapper = styled.div`
