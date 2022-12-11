@@ -18,6 +18,7 @@ const genreOptions: GenreType[] = [
   { value: "FANTASY", label: "Fantasy" },
   { value: "SCIFI", label: "Sci-fi" },
   { value: "CRIMINAL", label: "Kryminał" },
+  { value: "IT", label: "Informatyka" },
 ];
 
 export const getGenresByValue = (values: string[]): GenreType[] => {

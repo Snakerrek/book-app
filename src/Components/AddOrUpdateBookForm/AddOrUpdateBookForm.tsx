@@ -116,6 +116,7 @@ const AddOrUpdateBookForm = ({
 
   return (
     <Form onSubmit={handleAddOrUpdateBook}>
+      <p>Tytuł</p>
       <FormInput
         type="text"
         placeholder="Title"
@@ -127,6 +128,7 @@ const AddOrUpdateBookForm = ({
         display={isBookDataInvalid.titleInvalid}
         message={"Title is required"}
       />
+      <p>Autorzy</p>
       <TagsInput
         name={"authors"}
         placeholder={"Author"}
@@ -138,6 +140,7 @@ const AddOrUpdateBookForm = ({
         message={"At least one author is required"}
       />
       {!!bookData.cover && <CoverPeak backgroundImage={bookData.cover} />}
+      <p>Okładka</p>
       <FormInput
         type="text"
         placeholder="Cover"
@@ -145,6 +148,7 @@ const AddOrUpdateBookForm = ({
         value={bookData.cover}
         onChange={updateBookData}
       />
+      <p>Wydawnictwo</p>
       <FormInput
         type="text"
         placeholder="Publisher"
@@ -152,6 +156,7 @@ const AddOrUpdateBookForm = ({
         value={bookData.publisher}
         onChange={updateBookData}
       />
+      <p>Data wydania</p>
       <FormInput
         type="text"
         placeholder="Published date"
@@ -159,12 +164,14 @@ const AddOrUpdateBookForm = ({
         value={bookData.publishedDate}
         onChange={updateBookData}
       />
+      <p>Opis</p>
       <TextArea
         placeholder="Description"
         name="description"
         value={bookData.description}
         onChange={updateBookData}
       />
+      <p>Gatunek</p>
       <Select
         isMulti
         defaultValue={getGenresByValue(bookData.categories)}
@@ -174,6 +181,7 @@ const AddOrUpdateBookForm = ({
         classNamePrefix="select"
         onChange={(categories) => updateCategoriesData(categories)}
       />
+      <p>ISBN</p>
       <FormInput
         type="number"
         placeholder="ISBN"
@@ -181,6 +189,7 @@ const AddOrUpdateBookForm = ({
         value={bookData.isbn}
         onChange={updateBookData}
       />
+      <p>Ilość stron</p>
       <FormInput
         type="number"
         placeholder="Page count"
