@@ -144,6 +144,9 @@ const Profile = () => {
               userData={userData}
               onOpenFollowing={(open: boolean) => setDisplayFollowing(open)}
               onOpenFollowers={(open: boolean) => setDisplayFollowers(open)}
+              onUserDataChange={(updatedUser: UserData) =>
+                setUserData(updatedUser)
+              }
             />
           )}
           <UserStats />

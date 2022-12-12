@@ -16,6 +16,7 @@ type Props = {
   userData: UserData;
   onOpenFollowers: (open: boolean) => void;
   onOpenFollowing: (open: boolean) => void;
+  onUserDataChange: (userData: UserData) => void;
 };
 
 const Card = styled.div`
@@ -168,13 +169,19 @@ const Level = styled.span`
   font-weight: 700;
 `;
 
-const ProfileCard = ({ userData, onOpenFollowers, onOpenFollowing }: Props) => {
+const ProfileCard = ({
+  userData,
+  onOpenFollowers,
+  onOpenFollowing,
+  onUserDataChange,
+}: Props) => {
   const userDataToken = getUserData();
   const [loggedUserData, setLoggedUserData] = React.useState<UserData | null>();
   const [showFollow, setShowFollow] = React.useState<boolean>(true);
   const [showUnfollow, setShowUnfollow] = React.useState<boolean>(false);
 
   useEffect(() => {
+    console.log("henlo");
     if (
       !userDataToken ||
       !userDataToken.id ||
@@ -198,12 +205,12 @@ const ProfileCard = ({ userData, onOpenFollowers, onOpenFollowing }: Props) => {
       }
     }
     //eslint-disable-next-line
-  }, [loggedUserData, userDataToken]);
+  }, [loggedUserData, userDataToken, userData]);
 
   useEffect(() => {
     fetchLoggedInUserData();
     //eslint-disable-next-line
-  }, []);
+  }, [userData]);
 
   const fetchLoggedInUserData = async () => {
     if (!userDataToken || !userDataToken.id) return;
@@ -212,7 +219,7 @@ const ProfileCard = ({ userData, onOpenFollowers, onOpenFollowing }: Props) => {
     setLoggedUserData(loggedUser);
   };
 
-  const FollowUser = () => {
+  const FollowUser = async () => {
     if (
       !userDataToken ||
       !userDataToken.id ||
@@ -220,7 +227,7 @@ const ProfileCard = ({ userData, onOpenFollowers, onOpenFollowing }: Props) => {
     )
       return;
 
-    fetch("api/user/follow", {
+    const resJson = await fetch("api/user/follow", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -230,9 +237,11 @@ const ProfileCard = ({ userData, onOpenFollowers, onOpenFollowing }: Props) => {
         userToFollowId: userData._id,
       }),
     });
+    const res = await resJson.json();
+    onUserDataChange(res.updatedUser);
   };
 
-  const UnfollowUser = () => {
+  const UnfollowUser = async () => {
     if (
       !userDataToken ||
       !userDataToken.id ||
@@ -240,7 +249,7 @@ const ProfileCard = ({ userData, onOpenFollowers, onOpenFollowing }: Props) => {
     )
       return;
 
-    fetch("api/user/unfollow", {
+    const resJson = await fetch("api/user/unfollow", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -250,6 +259,8 @@ const ProfileCard = ({ userData, onOpenFollowers, onOpenFollowing }: Props) => {
         userToUnfollowId: userData._id,
       }),
     });
+    const res = await resJson.json();
+    onUserDataChange(res.updatedUser);
   };
 
   const userLvlData = calculateUserLevel(userData.books);
