@@ -77,7 +77,7 @@ const Searchbar = () => {
     <SearchbarWrapper onSubmit={onSearch}>
       <input
         type={"text"}
-        placeholder={"Search for book or an author!"}
+        placeholder={"Wyszukaj książkę lub autora!"}
         onChange={(e) => setSearchPhrase(e.target.value)}
       />
       <button type="submit">

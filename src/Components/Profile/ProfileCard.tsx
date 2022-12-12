@@ -14,6 +14,8 @@ import ProgressBar from "../ProgressBar/ProgressBar";
 
 type Props = {
   userData: UserData;
+  onOpenFollowers: (open: boolean) => void;
+  onOpenFollowing: (open: boolean) => void;
 };
 
 const Card = styled.div`
@@ -51,17 +53,30 @@ const Body = styled.div`
   }
 `;
 
-const Followers = styled.div`
+const FollowersContainer = styled.div`
   display: flex;
   flex-direction: row;
-  span {
-    font-size: 1.2rem;
-    position: relative;
-    margin-left: 5px;
-    width: 25px;
-    p {
-      position: absolute;
-      top: -18px;
+`;
+
+const Followers = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  color: #dc143c;
+  font-weight: 600;
+
+  & div {
+    display: flex;
+    color: white;
+    justify-content: center;
+    align-items: center;
+
+    :hover {
+      background-color: #dc143c;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: 0.2s ease-in-out;
     }
   }
 `;
@@ -153,7 +168,7 @@ const Level = styled.span`
   font-weight: 700;
 `;
 
-const ProfileCard = ({ userData }: Props) => {
+const ProfileCard = ({ userData, onOpenFollowers, onOpenFollowing }: Props) => {
   const userDataToken = getUserData();
   const [loggedUserData, setLoggedUserData] = React.useState<UserData | null>();
   const [showFollow, setShowFollow] = React.useState<boolean>(true);
@@ -247,12 +262,26 @@ const ProfileCard = ({ userData }: Props) => {
           alt="avatar"
         />
         <h2>{userData.username}</h2>
-        <Followers>
-          <IoIosPeople />
-          <span>
-            <p>{userData.followers.length}</p>
-          </span>
-        </Followers>
+        <FollowersContainer>
+          <Followers onClick={() => onOpenFollowers(true)}>
+            <span>
+              <p>Obserwujący</p>
+              <div>
+                <span> {userData.followers.length}</span>
+                <IoIosPeople />
+              </div>
+            </span>
+          </Followers>
+          <Followers onClick={() => onOpenFollowing(true)}>
+            <span>
+              <p>Obserwowani</p>
+              <div>
+                <span>{userData.following.length}</span>
+                <IoIosPeople />
+              </div>
+            </span>
+          </Followers>
+        </FollowersContainer>
         {showFollow && (
           <Follow onClick={FollowUser}>
             <span>
@@ -266,7 +295,6 @@ const ProfileCard = ({ userData }: Props) => {
             <span>
               <p>Unfollow </p>
             </span>
-            <FaUserPlus />
           </Follow>
         )}
         <StatsContainer>

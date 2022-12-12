@@ -12,12 +12,12 @@ const sidebarItems: {
   isLogo?: boolean;
 }[] = [
   { path: "/", text: "BookApp", Icon: FiBook, isLogo: true },
-  { path: "/", text: "Home", Icon: HiHome },
-  { path: "/bookSearch", text: "Browse Books", Icon: IoIosBookmarks },
-  { path: "/userList", text: "Users", Icon: HiUsers },
-  { path: "/profile", text: "My Profile", Icon: FaUserAlt },
-  { path: "/editProfile", text: "Edit Profile", Icon: FaUserEdit },
-  { path: "/bookList", text: "My books", Icon: SiBookstack },
+  { path: "/", text: "Strona główna", Icon: HiHome },
+  { path: "/bookSearch", text: "Przeglądaj książki", Icon: IoIosBookmarks },
+  { path: "/userList", text: "Użytkownicy", Icon: HiUsers },
+  { path: "/profile", text: "Mój profil", Icon: FaUserAlt },
+  { path: "/editProfile", text: "Edytuj profil", Icon: FaUserEdit },
+  { path: "/bookList", text: "Moje książki", Icon: SiBookstack },
 ];
 
 export default sidebarItems;

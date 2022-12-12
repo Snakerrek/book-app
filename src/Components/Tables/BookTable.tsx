@@ -29,7 +29,7 @@ const Table = styled.table`
 
       h3,
       p {
-        max-width: 250px;
+        max-width: 200px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;

@@ -42,12 +42,13 @@ const Table = styled.table`
   }
 `;
 
-type Props = { users: UserData[] };
+type Props = { users: UserData[]; onRedirect?: () => void };
 
-const UserTable = ({ users }: Props) => {
+const UserTable = ({ users, onRedirect }: Props) => {
   const navigate = useNavigate();
 
   const redirectToUserProfile = (userId: string) => {
+    if (onRedirect) onRedirect();
     if (userId) {
       navigate(`/profile/${userId}`);
     }
@@ -61,7 +62,7 @@ const UserTable = ({ users }: Props) => {
             <th></th>
             <th>Nazwa użytkownika</th>
             <th>Poziom</th>
-            <th>Ilość followersów</th>
+            <th>Ilość obserwujących</th>
             <th>Ilość książek</th>
             <th>Ulubiony gatunek</th>
           </tr>
@@ -79,7 +80,7 @@ const UserTable = ({ users }: Props) => {
                 <h3>{user.username}</h3>
               </td>
               <td>{calculateUserLevel(user.books).lvl} Lvl</td>
-              <td>0</td>
+              <td>{user.followers.length}</td>
               <td>{user.books.length}</td>
               <td>
                 {!!user.books && getGenreLabel(getFavoriteCategory(user.books))}

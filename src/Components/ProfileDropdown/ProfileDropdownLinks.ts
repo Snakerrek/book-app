@@ -10,8 +10,8 @@ type ProfileDropdownLinkType = {
 };
 
 export const profileDropdownLinks: ProfileDropdownLinkType[] = [
-  { text: "My profile", icon: FaUserAlt, link: "/profile" },
-  { text: "My books", icon: SiBookstack, link: "/bookList" },
-  { text: "Edit Profile", icon: FaUserEdit, link: "/editProfile" },
-  { text: "Logout", icon: RiLogoutCircleRLine, link: "/logout" },
+  { text: "Mój profil", icon: FaUserAlt, link: "/profile" },
+  { text: "Moje książki", icon: SiBookstack, link: "/bookList" },
+  { text: "Edytuj profil", icon: FaUserEdit, link: "/editProfile" },
+  { text: "Wyloguj", icon: RiLogoutCircleRLine, link: "/logout" },
 ];
