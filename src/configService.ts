@@ -19,6 +19,20 @@ const genreOptions: GenreType[] = [
   { value: "SCIFI", label: "Sci-fi" },
   { value: "CRIMINAL", label: "Kryminał" },
   { value: "IT", label: "Informatyka" },
+  { value: "HISTORY", label: "Historia" },
+  { value: "BIOGRAPHY", label: "Biografia" },
+  { value: "ADVENTURE", label: "Przygodowa" },
+  { value: "THRILLER", label: "Thriller" },
+  { value: "HORROR", label: "Horror" },
+  { value: "POETRY", label: "Poezja" },
+  { value: "ROMANCE", label: "Romans" },
+  { value: "COMEDY", label: "Komedia" },
+  { value: "DRAMA", label: "Dramat" },
+  { value: "MYSTERY", label: "Mystery" },
+  { value: "HUMOR", label: "Humor" },
+  { value: "FABLE", label: "Bajka" },
+  { value: "FAIRY_TALE", label: "Baśń" },
+  { value: "NOVEL", label: "Nowela" },
 ];
 
 export const getGenresByValue = (values: string[]): GenreType[] => {

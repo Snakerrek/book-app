@@ -149,7 +149,7 @@ const Profile = () => {
               }
             />
           )}
-          <UserStats />
+          {userData && <UserStats userData={userData} />}
           <ShelvesWrapper>
             {shelves.map((shelf) => (
               <ShelfComp

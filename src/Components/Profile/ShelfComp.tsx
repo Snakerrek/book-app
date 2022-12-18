@@ -92,12 +92,14 @@ const ShelfComp = (props: Props) => {
               src={book.bookDetails?.cover}
               alt={`${book.bookDetails?.title} cover`}
               onClick={() => onBookClick && onBookClick(book?.bookDetails?._id)}
+              key={book.bookDetails?._id}
             />
           );
         } else {
           return (
             <SmallCoverPlaceholder
               onClick={() => onBookClick && onBookClick(book?.bookDetails?._id)}
+              key={book.bookDetails?._id}
             >
               <p>{book?.bookDetails?.title}</p>
               <br />

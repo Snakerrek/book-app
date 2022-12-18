@@ -181,7 +181,6 @@ const ProfileCard = ({
   const [showUnfollow, setShowUnfollow] = React.useState<boolean>(false);
 
   useEffect(() => {
-    console.log("henlo");
     if (
       !userDataToken ||
       !userDataToken.id ||
