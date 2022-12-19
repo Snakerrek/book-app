@@ -27,7 +27,6 @@ const GenreRadarChart = ({ userData }: Props) => {
         });
       }
     });
-    console.log(genreData);
     return genreData;
   };
 
@@ -44,26 +43,30 @@ const GenreRadarChart = ({ userData }: Props) => {
 
   return (
     <>
-      <h3>Ulubione gatunki</h3>
-      <RadarChart
-        cx={225}
-        cy={175}
-        outerRadius={130}
-        width={450}
-        height={350}
-        data={getGenreData()}
-      >
-        <PolarGrid />
-        <PolarAngleAxis dataKey="subject" />
-        <PolarRadiusAxis domain={[0, getMaxValueFromGenreData()]} />
-        <Radar
-          name="Mike"
-          dataKey="A"
-          stroke="#8884d8"
-          fill="#8884d8"
-          fillOpacity={0.8}
-        />
-      </RadarChart>
+      {getGenreData().length > 2 && (
+        <>
+          <h3>Ulubione gatunki</h3>
+          <RadarChart
+            cx={225}
+            cy={175}
+            outerRadius={130}
+            width={450}
+            height={350}
+            data={getGenreData()}
+          >
+            <PolarGrid />
+            <PolarAngleAxis dataKey="subject" />
+            <PolarRadiusAxis domain={[0, getMaxValueFromGenreData()]} />
+            <Radar
+              name="Mike"
+              dataKey="A"
+              stroke="#8884d8"
+              fill="#8884d8"
+              fillOpacity={0.8}
+            />
+          </RadarChart>
+        </>
+      )}
     </>
   );
 };

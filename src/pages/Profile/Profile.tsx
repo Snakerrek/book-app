@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import BasicButton from "../../Components/BasicButton/BasicButton";
 import LoadingOverlay from "../../Components/LoadingOverlay/LoadingOverlay";
+import LastActivity from "../../Components/Profile/LastActivity";
 import ProfileCard from "../../Components/Profile/ProfileCard";
 import ShelfComp from "../../Components/Profile/ShelfComp";
 import UserStats from "../../Components/Profile/UserStats";
@@ -118,12 +119,9 @@ const Profile = () => {
   useEffect(() => {
     fetchUserData();
     fetchAllUsers();
+    window.scrollTo(0, 0);
     // eslint-disable-next-line
   }, [userId]);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   return (
     <>
@@ -181,6 +179,7 @@ const Profile = () => {
             backgroundGradient="orange"
           />
         ))}
+      {userData && <LastActivity userData={userData} />}
       <UserTableContainer>
         {displayFollowers && (
           <UserTable

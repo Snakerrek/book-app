@@ -1,5 +1,11 @@
 import jwtDecode from "jwt-decode";
-import { TokenUserData, UserBookDetails } from "./types";
+import {
+  Post,
+  PostTypes,
+  TokenUserData,
+  UserBookDetails,
+  WrappedPost,
+} from "./types";
 
 export const getUserData = (): TokenUserData | null => {
   const token = localStorage.getItem("token")?.replace("Bearer ", "");
@@ -65,4 +71,36 @@ export const calculateUserLevel = (books: UserBookDetails[]) => {
     i++;
   }
   return { lvl: i, xpLeft: xp };
+};
+
+export const getDateTime = (initialDate: Date) => {
+  const date = new Date(initialDate);
+  const year = date.getFullYear();
+  const month =
+    date.getMonth() + 1 >= 10 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`;
+  const day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`;
+  const hour = date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`;
+  const minutes =
+    date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`;
+  return `${hour}:${minutes}, ${year}-${month}-${day}`;
+};
+
+export const wrapPostsWithType = (posts: Post[]): WrappedPost[] => {
+  const wrappedPosts: WrappedPost[] = posts.map((post) => {
+    let wrappedPost: WrappedPost = {
+      post: post,
+      type: PostTypes.DEFAULT,
+    };
+    if (post.shelfName) {
+      wrappedPost.type = PostTypes.SHELVING;
+    } else if (post.reviewText) {
+      wrappedPost.type = PostTypes.REVIEW;
+    } else if (post.starRating) {
+      wrappedPost.type = PostTypes.STAR_RATING;
+    } else if (post.followedUserID) {
+      wrappedPost.type = PostTypes.FOLLOW;
+    }
+    return wrappedPost;
+  });
+  return wrappedPosts;
 };

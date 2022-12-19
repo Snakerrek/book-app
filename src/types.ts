@@ -81,3 +81,29 @@ export interface GenreType {
   value: string;
   label: string;
 }
+
+export interface Post {
+  author: BasicUserData;
+  _id: string;
+  datetime: Date;
+  bookID?: string;
+  book?: BasicBookType;
+  followedUser?: BasicUserData;
+  reviewText?: string;
+  starRating?: number;
+  shelfName?: string;
+  followedUserID?: string;
+}
+
+export interface WrappedPost {
+  post: Post;
+  type: PostTypes;
+}
+
+export enum PostTypes {
+  SHELVING,
+  REVIEW,
+  STAR_RATING,
+  FOLLOW,
+  DEFAULT,
+}

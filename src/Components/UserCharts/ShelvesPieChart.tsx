@@ -98,7 +98,6 @@ const ShelvesPieChart = (props: Props) => {
         shelvesData.push({ name: shelf, value: booksInShelf });
       }
     });
-    console.log(shelvesData);
     return shelvesData;
   };
 

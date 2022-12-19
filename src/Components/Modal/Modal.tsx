@@ -70,7 +70,7 @@ const BottomContainer = styled.div`
 const Modal = (props: Props) => {
   const { onClose, title, midContent, bottomContent } = props;
   return (
-    <Overlay onClick={onClose}>
+    <Overlay>
       <ModalContainer
         onClick={(e) => {
           e.stopPropagation();
