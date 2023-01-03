@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { UserData } from "../../types";
 import { IoIosPeople } from "react-icons/io";
-import { FaUserPlus } from "react-icons/fa";
 import { getAvatar } from "../../configService";
 import {
   calculateReadPages,
@@ -32,6 +31,7 @@ const Card = styled.div`
 const Top = styled.div`
   width: 100%;
   height: 100px;
+  margin-top: -50px;
   background-color: #dc143c;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -83,32 +83,18 @@ const Followers = styled.div`
 `;
 
 const Follow = styled.button`
-  width: 100px;
+  width: fit-content;
   height: 30px;
   background-color: transparent;
   border: none;
   border-radius: 5px;
   color: white;
-  margin-top: 10px;
-  display: flex;
-  flex-direction: row;
-  padding-top: 2px;
+  padding: 5px;
   cursor: pointer;
-  &:hover {
-    background-color: #dc143c;
-  }
-
-  svg {
-    margin-left: -15px;
-  }
-  span {
+  background-color: #dc143c;
+  p {
+    margin-top: 0;
     font-size: 1rem;
-    position: relative;
-    width: 100px;
-    p {
-      position: absolute;
-      top: -12px;
-    }
   }
 `;
 
@@ -124,6 +110,8 @@ const Stat = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 80px;
+  text-align: center;
   p {
     font-size: 1.3rem;
     font-weight: 700;
@@ -294,33 +282,28 @@ const ProfileCard = ({
         </FollowersContainer>
         {showFollow && (
           <Follow onClick={FollowUser}>
-            <span>
-              <p>Follow </p>
-            </span>
-            <FaUserPlus />
+            <p>Zaobserwuj</p>
           </Follow>
         )}
         {showUnfollow && (
           <Follow onClick={UnfollowUser}>
-            <span>
-              <p>Unfollow </p>
-            </span>
+            <p>Przestań obserwować</p>
           </Follow>
         )}
         <StatsContainer>
           <Stat>
-            <p>Read books</p>
+            <p>Przeczytane książki</p>
             <p>
               {userData.books.filter((book) => book.shelf === "READ").length}
             </p>
           </Stat>
           <Stat>
-            <p>Read pages</p>
+            <p>Przeczytane strony</p>
             <p>{calculateReadPages(userData.books)}</p>
           </Stat>
         </StatsContainer>
         <LevelData>
-          <h3>Level</h3>
+          <h3>Poziom</h3>
           <Level>{userLvlData.lvl}</Level>
           <div>
             <ProgressBar

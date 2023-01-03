@@ -8,13 +8,13 @@ type Props = {
 
 const RedParagraph = styled.p`
   color: red !important;
-  margin-top: -20px;
+  margin: -20px 0 5px 0 !important;
 `;
 
 const IncorrectInput = (props: Props) => {
   const { message, display } = props;
 
-  return <>{display && <RedParagraph>{message}</RedParagraph>}</>;
+  return <>{display && <RedParagraph>*{message}</RedParagraph>}</>;
 };
 
 export default IncorrectInput;

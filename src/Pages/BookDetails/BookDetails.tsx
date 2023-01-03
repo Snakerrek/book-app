@@ -279,7 +279,7 @@ const BookDetails = () => {
           />
           <BookRating>
             <div>ŚREDNIA OCEN</div>
-            <div>{reviewData?.starRatingAvg} / 10</div>
+            <div>{reviewData?.starRatingAvg.toFixed(2)} / 10</div>
             <div>
               <span>{reviewData?.starRatingsCount} OCEN</span>
               <span>-</span>

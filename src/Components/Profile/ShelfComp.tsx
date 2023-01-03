@@ -58,7 +58,7 @@ const ShelfComp = (props: Props) => {
       setBooks(shelfData.books.slice(0, numberOfBooksToDisplay).reverse());
     }
     //eslint-disable-next-line
-  }, []);
+  }, [shelfData]);
 
   return (
     <ShelfContainer ref={ref}>

@@ -7,7 +7,7 @@ import sidebarItems from "./sidebarItems";
 
 export const SidebarWrapper = styled.nav`
   width: 4rem;
-  height: 100vh;
+  height: 100%;
   position: fixed;
   background-color: ${(p) => p.theme.backgroundColors.white};
   z-index: 100;

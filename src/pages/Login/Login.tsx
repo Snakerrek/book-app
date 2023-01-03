@@ -23,6 +23,8 @@ const Login = () => {
   const [invalidUsername, setInvalidUsername] = useState<boolean>(false);
   const [invalidPassword, setInvalidPassword] = useState<boolean>(false);
 
+  const [serverResMess, setServerResMess] = useState<string>();
+
   const isInputValid = (user: { username: string; password: string }) => {
     setInvalidUsername(!validateNonEmpty(user.username));
     setInvalidPassword(!validateNonEmpty(user.password));
@@ -32,7 +34,7 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const user = {
+    const user: any = {
       username: xssSanitize(username),
       password: xssSanitize(password),
     };
@@ -50,6 +52,8 @@ const Login = () => {
           if (data.token) {
             localStorage.setItem("token", data.token);
             navigate("/");
+          } else {
+            setServerResMess(data.message);
           }
         });
     }
@@ -71,31 +75,32 @@ const Login = () => {
       <>
         <LoadingOverlay />
         <FormTitleContainer>
-          <h3>Login</h3>
+          <h3>Zaloguj się</h3>
         </FormTitleContainer>
         <Form onSubmit={handleSubmit}>
           <FormInput
             type="text"
-            placeholder="Username"
+            placeholder="Nazwa użytkownika"
             onChange={(e) => setUsername(e.target.value)}
           />
           <IncorrectInput
-            message="Username is required"
+            message="Nazwa użytkownika jest wymagana"
             display={invalidUsername}
           />
           <FormInput
             type="password"
-            placeholder="Password"
+            placeholder="Hasło"
             onChange={(e) => setPassword(e.target.value)}
           />
           <IncorrectInput
-            message="Password is required"
+            message="Hasło jest wymagane"
             display={invalidPassword}
           />
-          <FormSubmitButton type="submit">Login</FormSubmitButton>
+          {serverResMess && <IncorrectInput message={serverResMess} display />}
+          <FormSubmitButton type="submit">Zaloguj się</FormSubmitButton>
         </Form>
         <FormBottomLink>
-          Dont have account? <Link to={"/register"}>Sign Up</Link> now.
+          Nie masz konta? <Link to={"/register"}>Zarejestruj się</Link> teraz.
         </FormBottomLink>
       </>
     </AuthPageLayout>

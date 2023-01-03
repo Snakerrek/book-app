@@ -4,6 +4,10 @@ const avatars: Avatar[] = [
   { name: "default", url: "/avatars/default.png", isAvailable: false },
   { name: "zebra", url: "/avatars/zebra.jpg", isAvailable: true },
   { name: "panda", url: "/avatars/panda.jpg", isAvailable: true },
+  { name: "boss", url: "/avatars/boss.jpg", isAvailable: true },
+  { name: "monster", url: "/avatars/monster.jpg", isAvailable: true },
+  { name: "girl", url: "/avatars/girl.jpg", isAvailable: true },
+  { name: "guy", url: "/avatars/guy.jpg", isAvailable: true },
 ];
 
 export const getAvatar = (name: string): Avatar | undefined => {

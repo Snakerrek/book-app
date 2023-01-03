@@ -55,6 +55,7 @@ const Profile = () => {
     );
     const userData = await userDataJson.json();
     setUserData(userData);
+    console.log(userData.books);
     generateShelves(userData.books);
   };
 
@@ -166,6 +167,7 @@ const Profile = () => {
             backgroundGradient="orange"
             fullLine
           />
+          {userData && <LastActivity userData={userData} />}
         </ProfileWrapper>
       )}
       {displayFollowers ||
@@ -179,7 +181,6 @@ const Profile = () => {
             backgroundGradient="orange"
           />
         ))}
-      {userData && <LastActivity userData={userData} />}
       <UserTableContainer>
         {displayFollowers && (
           <UserTable

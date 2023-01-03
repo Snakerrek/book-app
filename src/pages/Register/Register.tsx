@@ -29,6 +29,8 @@ const Register = () => {
   const [invalidEmail, setInvalidEmail] = useState<boolean>(false);
   const [invalidPassword, setInvalidPassword] = useState<boolean>(false);
 
+  const [serverResMess, setServerResMess] = useState<string>();
+
   const isInputValid = (user: {
     username: string;
     email: string;
@@ -65,6 +67,8 @@ const Register = () => {
         .then((data) => {
           if (data.registerSuccessful) {
             navigate("/login");
+          } else {
+            setServerResMess(data.message);
           }
         });
     }
@@ -86,37 +90,41 @@ const Register = () => {
       <>
         <LoadingOverlay />
         <FormTitleContainer>
-          <h3>Register</h3>
+          <h3>Zarejestruj się</h3>
         </FormTitleContainer>
         <Form onSubmit={handleSubmit}>
           <FormInput
             type="text"
-            placeholder="Username"
+            placeholder="Nazwa użytkownika"
             onChange={(e) => setUsername(e.target.value)}
           />
           <IncorrectInput
-            message="Username is incorrect"
+            message="Nazwa użytkownika jest niepoprawna"
             display={invalidUsername}
           />
           <FormInput
             type="text"
-            placeholder="Email"
+            placeholder="Adres e-mail"
             onChange={(e) => setEmail(e.target.value)}
           />
-          <IncorrectInput message="Email is incorrect" display={invalidEmail} />
+          <IncorrectInput
+            message="Adres e-mail jest niepoprawny"
+            display={invalidEmail}
+          />
           <FormInput
             type="password"
-            placeholder="Password"
+            placeholder="Hasło"
             onChange={(e) => setPassword(e.target.value)}
           />
           <IncorrectInput
-            message="Password is incorrect"
+            message="Hasło nie spełnia wymagań"
             display={invalidPassword}
           />
-          <FormSubmitButton type="submit">Register</FormSubmitButton>
+          {serverResMess && <IncorrectInput message={serverResMess} display />}
+          <FormSubmitButton type="submit">Zarejestruj się</FormSubmitButton>
         </Form>
         <FormBottomLink>
-          Have account? <Link to={"/login"}>Sign In</Link> now.
+          Masz już konto? <Link to={"/login"}>Zaloguj się</Link> teraz.
         </FormBottomLink>
       </>
     </AuthPageLayout>

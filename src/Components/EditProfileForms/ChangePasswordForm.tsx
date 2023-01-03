@@ -86,7 +86,7 @@ const ChangePasswordForm = () => {
           onChange={updatePassword}
         />
         <IncorrectInput
-          message={"You must provide old password"}
+          message={"Musisz podać stare hasło"}
           display={invalidOldPassword}
         />
         <FormInput
@@ -97,7 +97,7 @@ const ChangePasswordForm = () => {
           onChange={updatePassword}
         />
         <IncorrectInput
-          message={"New password is incorrect"}
+          message={"Nowe hasło nie spełnia wymagań"}
           display={invalidNewPassword}
         />
         <FormInput
@@ -108,7 +108,7 @@ const ChangePasswordForm = () => {
           onChange={updatePassword}
         />
         <IncorrectInput
-          message={"Passwords are not the same"}
+          message={"Hasła nie są takie same"}
           display={invalidPasswordConfirmation}
         />
         <FormSubmitButton>Zmień hasło</FormSubmitButton>

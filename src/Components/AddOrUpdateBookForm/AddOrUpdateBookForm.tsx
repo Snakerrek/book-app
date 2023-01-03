@@ -93,6 +93,7 @@ const AddOrUpdateBookForm = ({
 
   const handleAddOrUpdateBook = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(bookData.title);
     if (isBookDataValid(bookData)) {
       const resJson = await fetch(
         initialBookData
@@ -119,31 +120,31 @@ const AddOrUpdateBookForm = ({
       <p>Tytuł</p>
       <FormInput
         type="text"
-        placeholder="Title"
+        placeholder="Tytuł"
         name="title"
         value={bookData.title}
         onChange={updateBookData}
       />
       <IncorrectInput
         display={isBookDataInvalid.titleInvalid}
-        message={"Title is required"}
+        message={"Tytuł jest wymagany"}
       />
       <p>Autorzy</p>
       <TagsInput
         name={"authors"}
-        placeholder={"Author"}
+        placeholder={"Autor"}
         onChange={updateAuthorsData}
         initialData={bookData.authors}
       />
       <IncorrectInput
         display={isBookDataInvalid.authorInvalid}
-        message={"At least one author is required"}
+        message={"Przynajmniej jeden autor jest wymagany"}
       />
       {!!bookData.cover && <CoverPeak backgroundImage={bookData.cover} />}
       <p>Okładka</p>
       <FormInput
         type="text"
-        placeholder="Cover"
+        placeholder="Okładka"
         name="cover"
         value={bookData.cover}
         onChange={updateBookData}
@@ -151,7 +152,7 @@ const AddOrUpdateBookForm = ({
       <p>Wydawnictwo</p>
       <FormInput
         type="text"
-        placeholder="Publisher"
+        placeholder="Wydawnictwo"
         name="publisher"
         value={bookData.publisher}
         onChange={updateBookData}
@@ -159,14 +160,14 @@ const AddOrUpdateBookForm = ({
       <p>Data wydania</p>
       <FormInput
         type="text"
-        placeholder="Published date"
+        placeholder="Data wydania"
         name="publishedDate"
         value={bookData.publishedDate}
         onChange={updateBookData}
       />
       <p>Opis</p>
       <TextArea
-        placeholder="Description"
+        placeholder="Opis"
         name="description"
         value={bookData.description}
         onChange={updateBookData}
@@ -192,7 +193,7 @@ const AddOrUpdateBookForm = ({
       <p>Ilość stron</p>
       <FormInput
         type="number"
-        placeholder="Page count"
+        placeholder="Ilość stron"
         name="pageCount"
         value={bookData.pageCount}
         onChange={updateBookData}
