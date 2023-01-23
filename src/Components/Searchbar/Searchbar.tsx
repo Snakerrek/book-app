@@ -3,6 +3,11 @@ import { FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useDebounce from "../../Hooks/useDebounce";
+import {
+  validateNonEmpty,
+  validateSQLInjection,
+  xssSanitize,
+} from "../Form/validators";
 
 const SearchbarWrapper = styled.form`
   width: 80%;
@@ -48,22 +53,31 @@ const Searchbar = () => {
   const [searchPhrase, setSearchPhrase] = useState<string>("");
   const debouncedSearchPhrase = useDebounce<string>(searchPhrase);
 
+  const redirectToSearch = () => {
+    const sanitizedSearchPhrase = xssSanitize(debouncedSearchPhrase);
+    if (
+      validateNonEmpty(sanitizedSearchPhrase) &&
+      validateSQLInjection(sanitizedSearchPhrase)
+    ) {
+      navigate(`/bookSearch/${sanitizedSearchPhrase}`);
+    }
+  };
+
   const onSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (searchPhrase !== "") navigate(`/bookSearch/${searchPhrase}`);
+    redirectToSearch();
   };
 
   useEffect(() => {
-    if (debouncedSearchPhrase !== "") {
-      navigate(`/bookSearch/${debouncedSearchPhrase}`);
-    }
+    redirectToSearch();
+    //eslint-disable-next-line
   }, [debouncedSearchPhrase]);
 
   return (
     <SearchbarWrapper onSubmit={onSearch}>
       <input
         type={"text"}
-        placeholder={"Search for book or an author!"}
+        placeholder={"Wyszukaj książkę lub autora!"}
         onChange={(e) => setSearchPhrase(e.target.value)}
       />
       <button type="submit">

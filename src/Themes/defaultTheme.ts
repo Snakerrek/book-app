@@ -17,7 +17,9 @@ const defaultTheme = {
   },
   backgroundColors: {
     grey: "#F3F3F9",
+    greyish: "#F2F2F2",
     white: "#FFFFFF",
+    brown: "#98572B",
   },
   colors: {
     purple: "#847DFA",
@@ -56,13 +58,14 @@ const defaultTheme = {
 export const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
   }
   body {
     background-color: #F3F3F9;
     margin: 0;
     padding: 0;
     font-size: 16px;
+    overflow-x: hidden;
   }
 `;
 

@@ -26,6 +26,7 @@ const AuthPageLayout = (props: { children: JSX.Element }) => {
     })
       .then((res) => res.json())
       .then((data) => (data.isLoggedIn ? navigate("/") : setDisplay(true)));
+    //eslint-disable-next-line
   }, []);
 
   return (

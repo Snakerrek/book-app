@@ -8,34 +8,55 @@ import Form from "../../Components/Form/Form";
 import FormInput from "../../Components/Form/FormInput";
 import FormTitleContainer from "../../Components/Form/FormTitleContainer";
 import FormSubmitButton from "../../Components/Form/FormSubmitButton";
+import IncorrectInput from "../../Components/Form/IncorrectInput";
+import {
+  validateNonEmpty,
+  xssSanitize,
+} from "../../Components/Form/validators";
+import LoadingOverlay from "../../Components/LoadingOverlay/LoadingOverlay";
 
 const Login = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  const [invalidUsername, setInvalidUsername] = useState<boolean>(false);
+  const [invalidPassword, setInvalidPassword] = useState<boolean>(false);
+
+  const [serverResMess, setServerResMess] = useState<string>();
+
+  const isInputValid = (user: { username: string; password: string }) => {
+    setInvalidUsername(!validateNonEmpty(user.username));
+    setInvalidPassword(!validateNonEmpty(user.password));
+    return validateNonEmpty(user.username) && validateNonEmpty(user.password);
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const user = {
-      username: username,
-      password: password,
+    const user: any = {
+      username: xssSanitize(username),
+      password: xssSanitize(password),
     };
 
-    fetch("/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.token) {
-          localStorage.setItem("token", data.token);
-          navigate("/");
-        }
-      });
+    if (isInputValid(user)) {
+      fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(user),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.token) {
+            localStorage.setItem("token", data.token);
+            navigate("/");
+          } else {
+            setServerResMess(data.message);
+          }
+        });
+    }
   };
 
   useEffect(() => {
@@ -46,31 +67,40 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => (data.isLoggedIn ? navigate("/") : null));
+    // eslint-disable-next-line
   }, []);
 
   return (
     <AuthPageLayout>
       <>
+        <LoadingOverlay />
         <FormTitleContainer>
-          <h3>Login</h3>
+          <h3>Zaloguj się</h3>
         </FormTitleContainer>
         <Form onSubmit={handleSubmit}>
           <FormInput
             type="text"
-            placeholder="Username"
-            required
+            placeholder="Nazwa użytkownika"
             onChange={(e) => setUsername(e.target.value)}
+          />
+          <IncorrectInput
+            message="Nazwa użytkownika jest wymagana"
+            display={invalidUsername}
           />
           <FormInput
             type="password"
-            placeholder="Password"
-            required
+            placeholder="Hasło"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <FormSubmitButton type="submit">Login</FormSubmitButton>
+          <IncorrectInput
+            message="Hasło jest wymagane"
+            display={invalidPassword}
+          />
+          {serverResMess && <IncorrectInput message={serverResMess} display />}
+          <FormSubmitButton type="submit">Zaloguj się</FormSubmitButton>
         </Form>
         <FormBottomLink>
-          Dont have account? <Link to={"/register"}>Sign Up</Link> now.
+          Nie masz konta? <Link to={"/register"}>Zarejestruj się</Link> teraz.
         </FormBottomLink>
       </>
     </AuthPageLayout>

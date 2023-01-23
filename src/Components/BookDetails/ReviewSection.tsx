@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Review, TokenUserData } from "../../types";
+import React, { useState } from "react";
+import { Review } from "../../types";
 import styled from "styled-components";
 import Form from "../Form/Form";
 import TextArea from "../Form/TextArea";
 import FormSubmitButton from "../Form/FormSubmitButton";
-import ReviewCard from "../ReviewCard/ReviewCard";
-import { getUserData } from "../../helpers";
+import ReviewCard from "./ReviewCard";
 
 const ReviewSectionWrapper = styled.div`
   display: flex;
@@ -29,7 +28,7 @@ const ReviewSectionContainer = styled.div`
 `;
 
 type Props = {
-  reviews?: Review[];
+  reviews: Review[];
   bookId?: string;
   onSubmitReview?: (userReview?: string) => void;
 };
@@ -42,7 +41,6 @@ const ReviewSection = (props: Props) => {
     if (props.onSubmitReview) props.onSubmitReview(userReview);
     setUserReview("");
   };
-
   return (
     <ReviewSectionWrapper>
       <h2>Recenzje</h2>
@@ -55,7 +53,7 @@ const ReviewSection = (props: Props) => {
           />
           <FormSubmitButton>Dodaj recenzję</FormSubmitButton>
         </Form>
-        {props.reviews?.map((review, id) => (
+        {[...props.reviews].reverse().map((review, id) => (
           <ReviewCard key={"reviewCard-" + id} review={review} />
         ))}
       </ReviewSectionContainer>

@@ -3,8 +3,9 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import BookThumbnail from "../../Components/BookThumbnail/BookThumbnail";
 import { BasicBookType } from "../../types";
-import AddBookForm from "../../Components/AddBookForm/AddBookForm";
 import Modal from "../../Components/Modal/Modal";
+import LoadingOverlay from "../../Components/LoadingOverlay/LoadingOverlay";
+import AddOrUpdateBookForm from "../../Components/AddOrUpdateBookForm/AddOrUpdateBookForm";
 
 const BookSearchWrapper = styled.div`
   display: flex;
@@ -52,27 +53,39 @@ const BookSearch = () => {
     setBooks(books);
   };
 
+  const fetchAllBooks = async () => {
+    const jsonBooks = await fetch(`/api/books/getAllBooks`);
+    const books: BasicBookType[] = await jsonBooks.json();
+    setBooks(books);
+  };
+
   useEffect(() => {
-    if (searchPhrase) fetchBooks(searchPhrase);
+    if (searchPhrase) {
+      fetchBooks(searchPhrase);
+    } else {
+      fetchAllBooks();
+    }
   }, [searchPhrase]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <BookSearchWrapper>
+      <LoadingOverlay />
       {books && books.length > 0 ? (
         books.map((book, index) => (
           <BookThumbnail book={book} key={`bookThumbnail-${index}`} />
         ))
       ) : (
         <div>
-          <p>
-            Unfortunately there is no such book in database. Would you like to
-            add it yourself?
-          </p>
-          <Button onClick={toggleModal}>Add book</Button>
+          <p>Niestety nie ma takiej książki w naszej bazie. Możesz ją dodać:</p>
+          <Button onClick={toggleModal}>Dodaj książkę</Button>
           {isModalOpen && (
             <Modal
-              title={"Add book"}
-              midContent={<AddBookForm onSubmit={toggleModal} />}
+              title={"Dodaj książkę"}
+              midContent={<AddOrUpdateBookForm onSubmit={toggleModal} />}
               onClose={toggleModal}
             />
           )}

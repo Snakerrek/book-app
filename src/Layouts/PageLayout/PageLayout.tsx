@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import LoadingOverlay from "../../Components/LoadingOverlay/LoadingOverlay";
 import Navbar from "../../Components/Navbar/Navbar";
-import Sidebar from "../../Components/Sidebar/Sidebar";
+import Sidebar from "../../Components/SideBar/SideBar";
 
 const ContentWrapper = styled.main`
   padding: 4rem 0 0 5rem;
@@ -27,6 +28,7 @@ const PageLayout = () => {
   useEffect(() => {
     checkAuthentication();
     setInterval(checkAuthentication, 10 * 60 * 1000);
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -36,7 +38,10 @@ const PageLayout = () => {
           <Sidebar />
           <Navbar />
           <ContentWrapper>
-            <Outlet />
+            <>
+              <LoadingOverlay />
+              <Outlet />
+            </>
           </ContentWrapper>
         </>
       )}

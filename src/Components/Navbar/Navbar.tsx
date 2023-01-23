@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import ProfileLogo from "../ProfileLogo/ProfileLogo";
+import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
 import Searchbar from "../Searchbar/Searchbar";
 
 const NavbarWrapper = styled.nav`
@@ -10,6 +10,7 @@ const NavbarWrapper = styled.nav`
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 10;
   padding-left: 13rem;
   padding-right: 1rem;
   display: flex;
@@ -24,7 +25,7 @@ const Navbar = () => {
   return (
     <NavbarWrapper>
       <Searchbar />
-      <ProfileLogo avatarPath="https://storage.googleapis.com/otwarteklatki-wp-media/sites/1/2016/07/goat-1438231_1920.jpg" />
+      <ProfileDropdown />
     </NavbarWrapper>
   );
 };

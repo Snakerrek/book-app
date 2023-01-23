@@ -23,12 +23,6 @@ const StarRating = ({
   const [hoveredStar, setHoveredStar] = useState<number>(0);
 
   useEffect(() => {
-    if (rating > 0 && rating < 11) {
-      onStarRate(rating);
-    }
-  }, [rating]);
-
-  useEffect(() => {
     setRating(initialStarValue);
   }, [initialStarValue]);
 
@@ -42,7 +36,10 @@ const StarRating = ({
               type="radio"
               name="rating"
               value={ratingVal}
-              onClick={() => setRating(ratingVal)}
+              onClick={() => {
+                onStarRate(ratingVal);
+                setRating(ratingVal);
+              }}
             />
             <FaStar
               size={25}
