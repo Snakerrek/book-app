@@ -25,6 +25,7 @@ const ShelfContainer = styled.div`
   img {
     width: auto;
     height: 125px;
+    aspect-ratio: calc(2 / 3);
     margin: 0 0 0 10px;
     cursor: pointer;
     transition: 0.2s ease-in-out;
